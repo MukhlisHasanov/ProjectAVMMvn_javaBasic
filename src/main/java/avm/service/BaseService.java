@@ -76,13 +76,13 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
         return sum;
     }
 
-    public String productList() {
-        return repository.toString();
-    }
-
-//    public void productList() {
-//        System.out.println(repository);
+//    public String productList() {
+//        return repository.toString();
 //    }
+
+    public void productList() {
+        System.out.println(repository);
+    }
 
     protected abstract T createProduct(T product);
 
