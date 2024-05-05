@@ -12,7 +12,7 @@ import avm.service.MarketService;
 /**
  * AIT-TR, Cohort 42.1, Java Basic, Project #2 AVM
  * @author Mukhlis
- * @version Apr-2024
+ * @version May-2024
  */
 public class Avm {
     public static void main(String[] args) {
