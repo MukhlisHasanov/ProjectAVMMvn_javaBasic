@@ -8,28 +8,17 @@ package avm.products;
 
 // In this class we show the methods associated with the movie class
 public class MovieProduct extends BaseProduct{
-    private int quantity;
     private String genre;
     private static int idCounter = 0;
 
     public MovieProduct(String name, String genre, float price, int quantity) {
-        super(name, price);
+        super(name, price, quantity);
         this.genre = genre;
-        this.quantity = quantity;
         this.id = ++idCounter;
     }
 
     public MovieProduct(MovieProduct product) {
-        super(product.getName(), product.getPrice());
-        this.quantity = product.getQuantity();
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+        super(product.getName(), product.getPrice(), product.getQuantity());
     }
 
     @Override

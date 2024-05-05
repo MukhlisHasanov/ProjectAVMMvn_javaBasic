@@ -1,7 +1,6 @@
 package avm.repository;
 
 import avm.products.MovieProduct;
-
 import java.util.*;
 
 /**
@@ -9,27 +8,26 @@ import java.util.*;
  * @author Rodion
  * @version Apr-2024
  */
-public class MovieRepository {
+public class MovieRepository implements ProductRepository<MovieProduct>{
     private Map<Integer, MovieProduct> movieMap;
 
     public MovieRepository() {
         movieMap = new HashMap<>();
     }
 
+    @Override
     public void put(MovieProduct movieProduct) {
         movieMap.put(movieProduct.getId(),movieProduct);
     }
 
+    @Override
     public MovieProduct get(int id) {
         return movieMap.get(id);
     }
 
+    @Override
     public void remove(int id) {
         movieMap.remove(id);
-    }
-
-    public Collection<MovieProduct> values() {
-        return movieMap.values();
     }
 
     public void initMovie() {
@@ -45,7 +43,7 @@ public class MovieRepository {
                 new MovieProduct("Beethoven2", "Comedy", 10, 200),
                 new MovieProduct("Nu Pogodi", "Animation", 8, 200)
         ));
-        movieProducts.forEach(movieProduct -> put(movieProduct));
+        movieProducts.forEach(this::put);
     }
 
     @Override
