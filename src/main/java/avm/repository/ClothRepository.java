@@ -1,7 +1,6 @@
 package avm.repository;
 
 import avm.products.ClothProduct;
-
 import java.util.*;
 
 /**
@@ -9,27 +8,26 @@ import java.util.*;
  * @author Valerian
  * @version Apr-2024
  */
-public class ClothRepository {
+public class ClothRepository implements ProductRepository<ClothProduct>{
     private Map<Integer, ClothProduct> clothMap;
 
     public ClothRepository() {
         clothMap = new HashMap<>();
     }
 
+    @Override
     public void put(ClothProduct clothProduct) {
         clothMap.put(clothProduct.getId(), clothProduct);
     }
 
+    @Override
     public ClothProduct get(int id) {
         return clothMap.get(id);
     }
 
+    @Override
     public void remove(int id) {
         clothMap.remove(id);
-    }
-
-    public Collection<ClothProduct> values() {
-        return clothMap.values();
     }
 
     public void initCloth() {
@@ -40,14 +38,14 @@ public class ClothRepository {
                 new ClothProduct("Boss", 150, 44, 50),
                 new ClothProduct("Hilfiger", 9, 45, 20)
         ));
-        clothProducts.forEach(clothProduct -> put(clothProduct));
+        clothProducts.forEach(this::put);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\nCloth Repository:\n");
-        clothMap.forEach((Integer, clothProduct) -> {
+        clothMap.forEach((id, clothProduct) -> {
             sb.append(clothProduct).append("\n");
         });
         return sb.toString();

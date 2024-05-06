@@ -1,7 +1,6 @@
 package avm.repository;
 
 import avm.products.CafeProduct;
-
 import java.util.*;
 
 /**
@@ -9,27 +8,26 @@ import java.util.*;
  * @author Alexander Germanow
  * @version Apr-2024
  */
-public class CafeRepository {
+public class CafeRepository implements ProductRepository<CafeProduct>{
     private Map<Integer, CafeProduct> cafeMap;
 
     public CafeRepository() {
         cafeMap = new HashMap<>();
     }
 
+    @Override
     public void put(CafeProduct cafeProduct) {
         cafeMap.put(cafeProduct.getId(), cafeProduct);
     }
 
+    @Override
     public CafeProduct get(int id) {
         return cafeMap.get(id);
     }
 
+    @Override
     public void remove(int id) {
         cafeMap.remove(id);
-    }
-
-    public Collection<CafeProduct> values() {
-        return cafeMap.values();
     }
 
     public void initCafe() {
@@ -45,7 +43,7 @@ public class CafeRepository {
                 new CafeProduct("Coffee", 2.5f, 200),
                 new CafeProduct("Espresso", 2.2f, 50)
         ));
-        cafeProducts.forEach(cafeProduct -> put(cafeProduct));
+        cafeProducts.forEach(this::put);
     }
 
     @Override

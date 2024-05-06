@@ -8,26 +8,15 @@ package avm.products;
 
 // In this class we show the methods associated with the market products class
 public class MarketProduct extends BaseProduct {
-    private int quantity;
     private static int idCounter = 0;
 
     public MarketProduct(String name, float price, int quantity) {
-        super(name, price);
-        this.quantity = quantity;
+        super(name, price, quantity);
         this.id = ++idCounter;
     }
 
     public MarketProduct(MarketProduct product) {
-        super(product.getName(), product.getPrice());
-        this.quantity = product.getQuantity();
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+        super(product.getName(), product.getPrice(), product.getQuantity());
     }
 
     @Override

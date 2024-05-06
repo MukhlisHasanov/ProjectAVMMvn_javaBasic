@@ -7,14 +7,16 @@ package avm.products;
  */
 
 // This is base class from future product classes
-public class BaseProduct {
+public abstract class BaseProduct {
     protected int id;
     protected String name;
     protected float price;
+    protected int quantity;
 
-    public BaseProduct(String name, float price) {
+    public BaseProduct(String name, float price, int quantity) {
         this.name = name;
         this.price = price;
+        this.quantity = quantity;
     }
 
     public int getId() {
@@ -31,6 +33,14 @@ public class BaseProduct {
 
     public float getPrice() {
         return price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override
