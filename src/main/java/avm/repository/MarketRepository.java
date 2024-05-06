@@ -9,15 +9,27 @@ import java.util.*;
  * @version Apr-2024
  */
 public class MarketRepository implements ProductRepository<MarketProduct>{
-    private Map<Integer, MarketProduct> marketMap;
+//    private Map<Integer, MarketProduct> marketMap;
+
+    private String dbName;
+
+    private final String SQL_INSERT = "INSERT INTO market (name, quantity, price) VALUES (?, ?, ?)";
+    private final String SQL_UPDATE = "UPDATE market SET name = ?, quantity = ?, price = ? WHERE id = ?";
+    private final String SQL_FIND_BY_ID = "SELECT * FROM market WHERE id = ?";
+    private final String SQL_FIND_ALL = "SELECT * FROM market";
+    private final String SQL_DELETE_BY_ID = "DELETE FROM market WHERE id = ?";
+    public MarketRepository(String dbName) {
+        this.dnName = dbName;
+    }
 
     public MarketRepository() {
-        marketMap = new HashMap<>();
+//        marketMap = new HashMap<>();
     }
 
     @Override
-    public void put(MarketProduct marketProduct) {
-        marketMap.put(marketProduct.getId(), marketProduct);
+    public void save(MarketProduct marketProduct) {
+//        marketMap.put(marketProduct.getId(), marketProduct);
+        
     }
 
     @Override
