@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ProjectAVMMvn" />
+        <module name="avm-java" />
       </profile>
     </annotationProcessing>
   </component>
