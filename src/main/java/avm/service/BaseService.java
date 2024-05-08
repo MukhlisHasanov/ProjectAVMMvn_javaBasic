@@ -81,7 +81,7 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
 //    }
 
     public void productList() {
-        System.out.println(repository);
+        repository.findAll().forEach(System.out::println);
     }
 
     protected abstract T createProduct(T product);

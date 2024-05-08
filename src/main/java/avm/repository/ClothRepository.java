@@ -14,11 +14,11 @@ public class ClothRepository implements ProductRepository<ClothProduct> {
 //    private Map<Integer, ClothProduct> clothMap;
 
     private String AvmDB;
-    private final String SQL_INSERT = "INSERT INTO market (name, quantity, price) VALUES (?, ?, ?)";
-    private final String SQL_UPDATE = "UPDATE market SET name = ?, quantity = ?, price = ? WHERE id = ?";
-    private final String SQL_FIND_BY_ID = "SELECT * FROM market WHERE id = ?";
-    private final String SQL_FIND_ALL = "SELECT * FROM market";
-    private final String SQL_DELETE_BY_ID = "DELETE FROM market WHERE id = ?";
+    private final String SQL_INSERT = "INSERT INTO cloth (name, size, quantity, price) VALUES (?, ?, ?, ?)";
+    private final String SQL_UPDATE = "UPDATE cloth SET name = ?, size = ?, quantity = ?, price = ? WHERE id = ?";
+    private final String SQL_FIND_BY_ID = "SELECT * FROM cloth WHERE id = ?";
+    private final String SQL_FIND_ALL = "SELECT * FROM cloth";
+    private final String SQL_DELETE_BY_ID = "DELETE FROM cloth WHERE id = ?";
 
 //    public ClothRepository() {
 ////        clothMap = new HashMap<>();
@@ -50,32 +50,27 @@ public class ClothRepository implements ProductRepository<ClothProduct> {
 
     @Override
     public void save(ClothProduct clothProduct) {
-        try (Connection connection = DriverManager.getConnection(AvmDB)) {
+        try (Connection connection = DriverManager.getConnection(AvmDB);
+             PreparedStatement psi = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement psu = connection.prepareStatement(SQL_UPDATE)) {
             if (clothProduct.getId() == null) {
-                try (PreparedStatement ps = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
-                    ps.setString(1, clothProduct.getName());
-                    ps.setString(2, clothProduct.getSize());
-                    ps.setInt(3, clothProduct.getQuantity());
-                    ps.setFloat(4, clothProduct.getPrice());
-                    ps.executeUpdate();
+                psi.setString(1, clothProduct.getName());
+                psi.setString(2, clothProduct.getSize());
+                psi.setInt(3, clothProduct.getQuantity());
+                psi.setFloat(4, clothProduct.getPrice());
+                psi.executeUpdate();
 
-                    try (ResultSet rs = ps.getGeneratedKeys()) {
-                        if (rs.next()) {
-                            Integer clothProductId = rs.getInt(1);
-                            System.out.println(clothProductId);
-                        }
-                    }
+                ResultSet rs = psi.getGeneratedKeys();
+                if (rs.next()) {
+                    clothProduct.setId(rs.getInt(1));
                 }
             } else {
-                try (PreparedStatement ps = connection.prepareStatement(SQL_UPDATE)) {
-                    ps.setInt(1, clothProduct.getId());
-                    ps.setString(2, clothProduct.getName());
-                    ps.setString(3, clothProduct.getSize());
-                    ps.setInt(4, clothProduct.getQuantity());
-                    ps.setFloat(5, clothProduct.getPrice());
-
-                    ps.executeUpdate();
-                }
+                psu.setString(1, clothProduct.getName());
+                psu.setString(2, clothProduct.getSize());
+                psu.setInt(3, clothProduct.getQuantity());
+                psu.setFloat(4, clothProduct.getPrice());
+                psu.setInt(5, clothProduct.getId());
+                psu.executeUpdate();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

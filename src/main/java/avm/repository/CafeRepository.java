@@ -14,11 +14,11 @@ public class CafeRepository implements ProductRepository<CafeProduct> {
 //    private Map<Integer, CafeProduct> cafeMap;
 
     public String AvmDB;
-    private final String SQL_INSERT = "INSERT INTO market (name, quantity, price) VALUES (?, ?, ?)";
-    private final String SQL_UPDATE = "UPDATE market SET name = ?, quantity = ?, price = ? WHERE id = ?";
-    private final String SQL_FIND_BY_ID = "SELECT * FROM market WHERE id = ?";
-    private final String SQL_FIND_ALL = "SELECT * FROM market";
-    private final String SQL_DELETE_BY_ID = "DELETE FROM market WHERE id = ?";
+    private final String SQL_INSERT = "INSERT INTO cafe (name, quantity, price) VALUES (?, ?, ?)";
+    private final String SQL_UPDATE = "UPDATE cafe SET name = ?, quantity = ?, price = ? WHERE id = ?";
+    private final String SQL_FIND_BY_ID = "SELECT * FROM cafe WHERE id = ?";
+    private final String SQL_FIND_ALL = "SELECT * FROM cafe";
+    private final String SQL_DELETE_BY_ID = "DELETE FROM cafe WHERE id = ?";
 
 //    public CafeRepository() {
 //        cafeMap = new HashMap<>();
@@ -65,10 +65,10 @@ public class CafeRepository implements ProductRepository<CafeProduct> {
                 }
             } else {
                 try (PreparedStatement ps = connection.prepareStatement(SQL_UPDATE)) {
-                    ps.setInt(1, cafeProduct.getId());
-                    ps.setString(2, cafeProduct.getName());
-                    ps.setInt(3, cafeProduct.getQuantity());
-                    ps.setFloat(4, cafeProduct.getPrice());
+                    ps.setString(1, cafeProduct.getName());
+                    ps.setInt(2, cafeProduct.getQuantity());
+                    ps.setFloat(3, cafeProduct.getPrice());
+                    ps.setInt(4, cafeProduct.getId());
                     ps.executeUpdate();
                 }
             }
