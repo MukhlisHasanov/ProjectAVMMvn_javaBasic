@@ -1,6 +1,8 @@
 package avm.repository;
 
 import avm.products.CafeProduct;
+
+import java.sql.*;
 import java.util.*;
 
 /**
@@ -8,51 +10,125 @@ import java.util.*;
  * @author Alexander Germanow
  * @version Apr-2024
  */
-public class CafeRepository implements ProductRepository<CafeProduct>{
-    private Map<Integer, CafeProduct> cafeMap;
+public class CafeRepository implements ProductRepository<CafeProduct> {
+//    private Map<Integer, CafeProduct> cafeMap;
 
-    public CafeRepository() {
-        cafeMap = new HashMap<>();
+    public String AvmDB;
+    private final String SQL_INSERT = "INSERT INTO cafe (name, quantity, price) VALUES (?, ?, ?)";
+    private final String SQL_UPDATE = "UPDATE cafe SET name = ?, quantity = ?, price = ? WHERE id = ?";
+    private final String SQL_FIND_BY_ID = "SELECT * FROM cafe WHERE id = ?";
+    private final String SQL_FIND_ALL = "SELECT * FROM cafe";
+    private final String SQL_DELETE_BY_ID = "DELETE FROM cafe WHERE id = ?";
+
+//    public CafeRepository() {
+//        cafeMap = new HashMap<>();
+//    }
+
+    public CafeRepository(String AvmDB) {
+        this.AvmDB = AvmDB;
     }
 
     @Override
-    public void put(CafeProduct cafeProduct) {
-        cafeMap.put(cafeProduct.getId(), cafeProduct);
+    public Collection<CafeProduct> findAll() {
+        Collection<CafeProduct> menues = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(AvmDB);
+             Statement stmt = connection.createStatement()) {
+            ResultSet rs = stmt.executeQuery(SQL_FIND_ALL);
+            while (rs.next()) {
+                menues.add(new CafeProduct(
+                        rs.getString("name"),
+                        rs.getInt("quantity"),
+                        rs.getFloat("price")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return menues;
     }
 
     @Override
-    public CafeProduct get(int id) {
-        return cafeMap.get(id);
+    public void save(CafeProduct cafeProduct) {
+        try (Connection connection = DriverManager.getConnection(AvmDB)) {
+            if (cafeProduct.getId() == null) {
+                try (PreparedStatement ps = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
+                    ps.setString(1, cafeProduct.getName());
+                    ps.setInt(2, cafeProduct.getQuantity());
+                    ps.setFloat(3, cafeProduct.getPrice());
+                    ps.executeUpdate();
+
+                    try (ResultSet rs = ps.getGeneratedKeys()) {
+                        if (rs.next()) {
+                            Integer cafeProductId = rs.getInt(1);
+                            System.out.println(cafeProductId);
+                        }
+                    }
+                }
+            } else {
+                try (PreparedStatement ps = connection.prepareStatement(SQL_UPDATE)) {
+                    ps.setString(1, cafeProduct.getName());
+                    ps.setInt(2, cafeProduct.getQuantity());
+                    ps.setFloat(3, cafeProduct.getPrice());
+                    ps.setInt(4, cafeProduct.getId());
+                    ps.executeUpdate();
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public CafeProduct findById(Integer id) {
+        CafeProduct cafeProduct = null;
+        try (Connection connection = DriverManager.getConnection(AvmDB);
+             PreparedStatement psm = connection.prepareStatement(SQL_FIND_BY_ID)) {
+            psm.setInt(1, id);
+            ResultSet rs = psm.executeQuery();
+            if (rs.next()) {
+                cafeProduct = new CafeProduct(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getInt("quantity"),
+                        rs.getFloat("price"));
+            }
+            return cafeProduct;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void remove(int id) {
-        cafeMap.remove(id);
+        try (Connection connection = DriverManager.getConnection(AvmDB);
+             PreparedStatement ps = connection.prepareStatement(SQL_DELETE_BY_ID)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void initCafe() {
         List<CafeProduct> cafeProducts = new ArrayList<>(List.of(
-                new CafeProduct("Chocolate", 1.5f, 50),
-                new CafeProduct("Strawberry with chocolate", 1.3f, 50),
-                new CafeProduct("Latte macchiate", 2.5f, 50),
-                new CafeProduct("Vanil", 1.5f, 100),
-                new CafeProduct("Cherry", 2.2f, 100),
-                new CafeProduct("Caramel", 2.2f, 100),
-                new CafeProduct("Black tea",2.5f, 120),
-                new CafeProduct("Green tea", 2.5f, 120),
-                new CafeProduct("Coffee", 2.5f, 200),
-                new CafeProduct("Espresso", 2.2f, 50)
+                new CafeProduct("Chocolate", 50, 1.5f),
+                new CafeProduct("Strawberry with chocolate", 50, 1.3f),
+                new CafeProduct("Latte macchiate", 50, 2.5f),
+                new CafeProduct("Vanil", 100, 1.5f),
+                new CafeProduct("Cherry", 100, 2.2f),
+                new CafeProduct("Caramel", 100, 2.2f),
+                new CafeProduct("Black tea", 120, 2.5f),
+                new CafeProduct("Green tea", 120, 2.5f),
+                new CafeProduct("Coffee", 200, 2.5f),
+                new CafeProduct("Espresso", 50, 2.2f)
         ));
-        cafeProducts.forEach(this::put);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\nCafe menu:\n");
-        cafeMap.forEach((Integer, cafeProduct) -> {
-            sb.append(cafeProduct).append("\n");
-        });
-        return sb.toString();
+        cafeProducts.forEach(cafeProduct -> save(cafeProduct));
     }
 }
+//    @Override
+//    public String toString() {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("\nCafe menu:\n");
+//        cafeMap.forEach((Integer, cafeProduct) -> {
+//            sb.append(cafeProduct).append("\n");
+//        });
+//        return sb.toString();
+//    }
+//}
