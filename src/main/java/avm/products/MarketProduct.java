@@ -11,12 +11,16 @@ public class MarketProduct extends BaseProduct {
     private static int idCounter = 0;
 
     public MarketProduct(String name, float price, int quantity) {
-        super(name, price, quantity);
+        super(name, quantity, price);
         this.id = ++idCounter;
     }
 
     public MarketProduct(MarketProduct product) {
-        super(product.getName(), product.getPrice(), product.getQuantity());
+        super(product.getName(), product.getQuantity(), product.getPrice());
+    }
+
+    public MarketProduct(int id, String name, int quantity, float price) {
+        super(name, quantity, price);
     }
 
     @Override

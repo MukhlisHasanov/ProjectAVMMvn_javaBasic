@@ -16,6 +16,7 @@ import avm.service.MarketService;
  */
 public class Avm {
     public static void main(String[] args) {
+
         ClientRepository clientRepository = new ClientRepository();
         ClientController clientController = new ClientController(clientRepository);
         clientRepository.initClient();

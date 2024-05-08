@@ -10,13 +10,17 @@ package avm.products;
 public class CafeProduct extends BaseProduct {
     private static int idCounter = 0;
 
-    public CafeProduct(String name, float price, int quantity) {
-        super(name, price, quantity);
+    public CafeProduct(String name, int quantity, float price) {
+        super(name, quantity, price);
         this.id = ++idCounter;
     }
 
     public CafeProduct(CafeProduct product) {
-        super(product.getName(), product.getPrice(), product.getQuantity());
+        super(product.getName(), product.getQuantity(), product.getPrice());
+    }
+
+    public CafeProduct(int id, String name, int quantity, float price) {
+        super(name, quantity, price);
     }
 
     @Override

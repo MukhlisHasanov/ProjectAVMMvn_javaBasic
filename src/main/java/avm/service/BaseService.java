@@ -19,7 +19,7 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
     }
 
     public String addToOrder(int id, int quantity) {
-        T product = repository.get(id);
+        T product = (T) repository.findById(id);
         if (product != null) {
             if (product.getQuantity() >= quantity) {
                 if (productList.containsKey(id)) {
@@ -44,7 +44,7 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
         if (productList.containsKey(id)) {
             int currentQuantity = product.getQuantity();
             productList.remove(id);
-            T repositoryProduct = repository.get(id);
+            T repositoryProduct = repository.findById(id);
             repositoryProduct.setQuantity(repositoryProduct.getQuantity() + currentQuantity);
             return ("You removed: " + currentQuantity + " pcs of " + product.getName() + " from shopping cart");
         }
@@ -54,7 +54,7 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
     public String removeFromOrder(int id, int quantityToRemove) {
         if (productList.containsKey(id)) {
             T product = productList.get(id);
-            T repositoryProduct = repository.get(id);
+            T repositoryProduct = repository.findById(id);
             int currentQuantity = product.getQuantity();
             int newQuantity = currentQuantity - quantityToRemove;
             if (newQuantity <= 0) {
