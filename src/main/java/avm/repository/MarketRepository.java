@@ -65,10 +65,11 @@ public class MarketRepository implements ProductRepository<MarketProduct> {
                 }
             } else {
                 try (PreparedStatement ps = connection.prepareStatement(SQL_UPDATE)) {
-                    ps.setString(1, product.getName());
-                    ps.setInt(2, product.getQuantity());
-                    ps.setFloat(3, product.getPrice());
-                    ps.setInt(4, product.getId()); // Assuming ID is the 4th parameter in your SQL_UPDATE statement
+                    ps.setInt(1, product.getId());
+                    ps.setString(2, product.getName());
+                    ps.setInt(3, product.getQuantity());
+                    ps.setFloat(4, product.getPrice());
+
                     ps.executeUpdate();
                 }
             }

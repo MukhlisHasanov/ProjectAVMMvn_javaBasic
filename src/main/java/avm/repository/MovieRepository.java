@@ -68,11 +68,11 @@ public class MovieRepository implements ProductRepository<MovieProduct>{
                 }
             } else {
                 try (PreparedStatement ps = connection.prepareStatement(SQL_UPDATE)) {
-                    ps.setString(1, movieProduct.getName());
-                    ps.setString(2, movieProduct.getGenre());
-                    ps.setFloat(3, movieProduct.getPrice());
-                    ps.setInt(4, movieProduct.getQuantity());
-                    ps.setInt(5, movieProduct.getId());
+                    ps.setInt(1, movieProduct.getId());
+                    ps.setString(2, movieProduct.getName());
+                    ps.setString(3, movieProduct.getGenre());
+                    ps.setFloat(4, movieProduct.getPrice());
+                    ps.setInt(5, movieProduct.getQuantity());
                     ps.executeUpdate();
                 }
             }

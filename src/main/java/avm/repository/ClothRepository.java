@@ -68,11 +68,12 @@ public class ClothRepository implements ProductRepository<ClothProduct> {
                 }
             } else {
                 try (PreparedStatement ps = connection.prepareStatement(SQL_UPDATE)) {
-                    ps.setString(1, clothProduct.getName());
-                    ps.setString(2, clothProduct.getSize());
-                    ps.setInt(3, clothProduct.getQuantity());
-                    ps.setFloat(4, clothProduct.getPrice());
-                    ps.setInt(5, clothProduct.getId());
+                    ps.setInt(1, clothProduct.getId());
+                    ps.setString(2, clothProduct.getName());
+                    ps.setString(3, clothProduct.getSize());
+                    ps.setInt(4, clothProduct.getQuantity());
+                    ps.setFloat(5, clothProduct.getPrice());
+
                     ps.executeUpdate();
                 }
             }

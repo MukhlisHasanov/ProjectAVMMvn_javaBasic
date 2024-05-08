@@ -65,10 +65,10 @@ public class CafeRepository implements ProductRepository<CafeProduct> {
                 }
             } else {
                 try (PreparedStatement ps = connection.prepareStatement(SQL_UPDATE)) {
-                    ps.setString(1, cafeProduct.getName());
-                    ps.setInt(2, cafeProduct.getQuantity());
-                    ps.setFloat(3, cafeProduct.getPrice());
-                    ps.setInt(4, cafeProduct.getId());
+                    ps.setInt(1, cafeProduct.getId());
+                    ps.setString(2, cafeProduct.getName());
+                    ps.setInt(3, cafeProduct.getQuantity());
+                    ps.setFloat(4, cafeProduct.getPrice());
                     ps.executeUpdate();
                 }
             }

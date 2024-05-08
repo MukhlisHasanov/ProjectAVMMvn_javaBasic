@@ -22,10 +22,10 @@ public class Avm {
         clientRepository.initClient();
         Client client = clientController.start();
 
-        MarketRepository marketRepository = new MarketRepository();
-        ClothRepository clothRepository = new ClothRepository();
-        MovieRepository movieRepository = new MovieRepository();
-        CafeRepository cafeRepository = new CafeRepository();
+        MarketRepository marketRepository = new MarketRepository("jdbc:sqlite:C:/temp/AvmDB");
+        ClothRepository clothRepository = new ClothRepository("jdbc:sqlite:C:/temp/AvmDB");
+        MovieRepository movieRepository = new MovieRepository("jdbc:sqlite:C:/temp/AvmDB");
+        CafeRepository cafeRepository = new CafeRepository("jdbc:sqlite:C:/temp/AvmDB");
 
         MarketService marketService = new MarketService(client,marketRepository);
         ClothService clothService = new ClothService(client, clothRepository);
