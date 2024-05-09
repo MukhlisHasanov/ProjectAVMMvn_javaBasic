@@ -112,6 +112,7 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
 
     public float payTheBill() {
         client.setWallet(client.getWallet() - sumOrder());
+        productList.clear();
         return client.getWallet();
     }
 
