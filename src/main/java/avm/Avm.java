@@ -41,6 +41,6 @@ public class Avm {
 //        movieRepository.initMovie();
 //        cafeRepository.initCafe();
 
-        new AvmController(marketService, clothService, cinemaService,cafeService).run();
+        new AvmController(marketService, clothService, cinemaService,cafeService, client).run();
     }
 }

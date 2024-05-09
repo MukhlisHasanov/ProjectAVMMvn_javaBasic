@@ -16,7 +16,8 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
     Connection connection = DriverManager.getConnection(AvmDB);
     protected R repository;
     protected Map<Integer, T> productList;
-    private final Client client;
+    private Client client;
+
 
     public BaseService(Client client, R repository) throws SQLException {
         this.repository = repository;
@@ -31,11 +32,13 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
                 if (productList.containsKey(id)) {
                     T existingProduct = productList.get(id);
                     existingProduct.setQuantity(existingProduct.getQuantity() + quantity);
+                    //System.out.println("You added: " + quantity + " pcs of " + product.getName() + " to shopping cart");
                 } else {
                     T newProduct = createProduct(product);
                     newProduct.setQuantity(quantity);
                     newProduct.setId(id);
                     productList.put(id, newProduct);
+                    //System.out.println("You added: " + quantity + " pcs of " + product.getName() + " to shopping cart");
                 }
                 product.setQuantity(product.getQuantity() - quantity);
 
@@ -105,6 +108,11 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
             sum += product.getPrice() * product.getQuantity();
         }
         return sum;
+    }
+
+    public float payTheBill() {
+        client.setWallet(client.getWallet() - sumOrder());
+        return client.getWallet();
     }
 
     public void productList() {

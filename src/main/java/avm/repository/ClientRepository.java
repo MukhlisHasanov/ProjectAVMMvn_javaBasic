@@ -1,6 +1,8 @@
 package avm.repository;
 
 import avm.products.Client;
+import avm.products.Wallet;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.Map;
  */
 public class ClientRepository {
     private Map<Integer, Client> clientMap;
+
 
     public ClientRepository() {
         clientMap = new HashMap<>();
@@ -32,12 +35,12 @@ public class ClientRepository {
 
     public void initClient() {
         List<Client> clients = new ArrayList<>(List.of(
-                new Client("Alexander", 56),
-                new Client("Andrey", 50),
-                new Client("Valerian", 38),
-                new Client("Mukhlis", 29),
-                new Client("Rodion", 24),
-                new Client("Sergey", 45)
+                new Client("Alexander", 56, 1000),
+                new Client("Andrey", 50, 1000),
+                new Client("Valerian", 38, 1000),
+                new Client("Mukhlis", 29, 1000),
+                new Client("Rodion", 24, 1000),
+                new Client("Sergey", 45, 1000)
         ));
         clients.forEach(client -> put(client));
     }
