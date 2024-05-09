@@ -19,11 +19,16 @@ public class MarketProduct extends BaseProduct {
         super(product.getName(), product.getQuantity(), product.getPrice());
     }
 
-    public MarketProduct(int id, String name, int quantity, float price) {
+    public MarketProduct(Integer id, String name, int quantity, float price) {
         super(name, quantity, price);
         this.id = id;
     }
 
+    public void update(String name, int quantity, float price) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+    }
     @Override
     public String toString() {
         return "[id: " + id +

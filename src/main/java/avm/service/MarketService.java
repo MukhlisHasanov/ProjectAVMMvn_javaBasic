@@ -17,11 +17,28 @@ public class MarketService extends BaseService<MarketProduct, MarketRepository> 
         super(client, marketRepository);
     }
 
+    public void add(String name, int quantity, float price) {
+        MarketProduct newProduct = new MarketProduct(null,name, quantity, price);
+        repository.save(newProduct);
+    }
+
     public boolean update(int id, String name, int quantity, float price) {
         MarketProduct updProduct = repository.findById(id);
         if (updProduct != null) {
-
+            updProduct.update(name, quantity, price);
+            repository.save(updProduct);
+            return true;
         }
+        return false;
+    }
+
+    public boolean delete(int id) {
+        MarketProduct delProduct = repository.findById(id);
+        if (delProduct != null) {
+            repository.delete(id);
+            return true;
+        }
+        return false;
     }
 
     @Override
