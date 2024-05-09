@@ -1,7 +1,6 @@
 package avm.repository;
 
 import avm.products.BaseProduct;
-import avm.products.MarketProduct;
 
 import java.util.Collection;
 
@@ -15,5 +14,5 @@ public interface ProductRepository <T extends BaseProduct> {
 
 //    MarketProduct findById(Integer id);
 
-    void remove(int id);
+    void delete(int id);
 }

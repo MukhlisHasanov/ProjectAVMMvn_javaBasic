@@ -98,7 +98,7 @@ public class ClothRepository implements ProductRepository<ClothProduct> {
     }
 
     @Override
-    public void remove(int id) {
+    public void delete(int id) {
         try (Connection connection = DriverManager.getConnection(AvmDB);
              PreparedStatement ps = connection.prepareStatement(SQL_DELETE_BY_ID)) {
             ps.setInt(1, id);
