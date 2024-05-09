@@ -6,13 +6,12 @@ import java.sql.*;
 import java.util.*;
 
 /**
- * AIT-TR, Cohort 42.1, Java Basic, Project AVM/Hypermarket
+ * AIT-TR, Cohort 42.1, Java Basic, Project #2 AVM/Hypermarket
  * @author Mukhlis
- * @version Apr-2024
+ * @version May-2024
  */
 public class MarketRepository implements ProductRepository<MarketProduct> {
-//    private Map<Integer, MarketProduct> marketMap;
-
+    //    private Map<Integer, MarketProduct> marketMap;
     private String AvmDB;
     private final String SQL_INSERT = "INSERT INTO market (name, quantity, price) VALUES (?, ?, ?)";
     private final String SQL_UPDATE = "UPDATE market SET name = ?, quantity = ?, price = ? WHERE id = ?";
@@ -30,6 +29,7 @@ public class MarketRepository implements ProductRepository<MarketProduct> {
 
     @Override
     public Collection<MarketProduct> findAll() {
+        // return productMap.values();
         Collection<MarketProduct> products = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(AvmDB);
              Statement stmt = connection.createStatement()) {
@@ -37,8 +37,8 @@ public class MarketRepository implements ProductRepository<MarketProduct> {
             while (rs.next()) {
                 products.add(new MarketProduct(
                         rs.getString("name"),
-                        rs.getFloat("price"),
-                        rs.getInt("quantity")));
+                        rs.getInt("quantity"),
+                        rs.getFloat("price")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -48,61 +48,56 @@ public class MarketRepository implements ProductRepository<MarketProduct> {
 
     @Override
     public void save(MarketProduct product) {
-        try (Connection connection = DriverManager.getConnection(AvmDB)) {
+        try (Connection connection = DriverManager.getConnection(AvmDB);
+             PreparedStatement psi = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement psu = connection.prepareStatement(SQL_UPDATE)) {
             if (product.getId() == null) {
-                try (PreparedStatement ps = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
-                    ps.setString(1, product.getName());
-                    ps.setInt(2, product.getQuantity());
-                    ps.setFloat(3, product.getPrice());
-                    ps.executeUpdate();
+                // insert record
+                psi.setString(1, product.getName());
+                psi.setInt(2, product.getQuantity());
+                psi.setFloat(3, product.getPrice());
+                psi.executeUpdate();
 
-                    try (ResultSet rs = ps.getGeneratedKeys()) {
-                        if (rs.next()) {
-                            Integer marketProductId = rs.getInt(1);
-                            System.out.println(marketProductId);
-                        }
-                    }
+                ResultSet rs = psi.getGeneratedKeys();
+                if (rs.next()) {
+                    product.setId(rs.getInt(1));
                 }
             } else {
-                try (PreparedStatement ps = connection.prepareStatement(SQL_UPDATE)) {
-                    ps.setString(1, product.getName());
-                    ps.setInt(2, product.getQuantity());
-                    ps.setFloat(3, product.getPrice());
-                    ps.setInt(4, product.getId());
-                    ps.executeUpdate();
-                }
+                // update record
+                psu.setString(1, product.getName());
+                psu.setInt(2, product.getQuantity());
+                psu.setFloat(3, product.getPrice());
+                psu.setInt(4, product.getId());
+                psu.executeUpdate();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-//    @Override
-//    public MarketProduct findById(int id) {
-//        return null;
-//    }
-
     @Override
     public MarketProduct findById(Integer id) {
-        MarketProduct marketProduct = null;
+        // return productMap.get(id)
+        MarketProduct product = null;
         try (Connection connection = DriverManager.getConnection(AvmDB);
              PreparedStatement ps = connection.prepareStatement(SQL_FIND_BY_ID)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                marketProduct = new MarketProduct(rs.getInt("id"),
+                product = new MarketProduct(rs.getInt("id"),
                         rs.getString("name"),
                         rs.getInt("quantity"),
                         rs.getFloat("price"));
             }
-            return marketProduct;
+            return product;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void remove(int id) {
+    public void delete(int id) {
+        // productMap.delete(id)
         try (Connection connection = DriverManager.getConnection(AvmDB);
              PreparedStatement ps = connection.prepareStatement(SQL_DELETE_BY_ID)) {
             ps.setInt(1, id);
@@ -111,29 +106,30 @@ public class MarketRepository implements ProductRepository<MarketProduct> {
             throw new RuntimeException(e);
         }
     }
-
-    public void initMarket() {
-        List<MarketProduct> marketProducts = new ArrayList<>(List.of(
-                new MarketProduct("Bublik", 1.98f, 100),
-                new MarketProduct("Beef", 6.50f, 15),
-                new MarketProduct("Coca-Cola", 0.5f, 120),
-                new MarketProduct("Salmon", 15.5f, 30),
-                new MarketProduct("Chicken", 8.5f, 40),
-                new MarketProduct("Turkey", 9, 18),
-                new MarketProduct("Milk", 1, 100),
-                new MarketProduct("Yoghurt", 1.2f, 30),
-                new MarketProduct("Butter", 2.2f, 15),
-                new MarketProduct("Cheese", 7.5f, 22),
-                new MarketProduct("Salt", 0.5f, 25),
-                new MarketProduct("Sugar", 1.25f, 250),
-                new MarketProduct("Flour", 0.60f, 200),
-                new MarketProduct("Olive", 12, 30),
-                new MarketProduct("Soap", 1.3f, 70),
-                new MarketProduct("Shampoo", 2.4f, 30)
-        ));
-        marketProducts.forEach(marketProduct -> save(marketProduct));
-    }
 }
+
+//    public void initMarket() {
+//        List<MarketProduct> marketProducts = new ArrayList<>(List.of(
+//                new MarketProduct("Bublik", 1.98f, 100),
+//                new MarketProduct("Beef", 6.50f, 15),
+//                new MarketProduct("Coca-Cola", 0.5f, 120),
+//                new MarketProduct("Salmon", 15.5f, 30),
+//                new MarketProduct("Chicken", 8.5f, 40),
+//                new MarketProduct("Turkey", 9, 18),
+//                new MarketProduct("Milk", 1, 100),
+//                new MarketProduct("Yoghurt", 1.2f, 30),
+//                new MarketProduct("Butter", 2.2f, 15),
+//                new MarketProduct("Cheese", 7.5f, 22),
+//                new MarketProduct("Salt", 0.5f, 25),
+//                new MarketProduct("Sugar", 1.25f, 250),
+//                new MarketProduct("Flour", 0.60f, 200),
+//                new MarketProduct("Olive", 12, 30),
+//                new MarketProduct("Soap", 1.3f, 70),
+//                new MarketProduct("Shampoo", 2.4f, 30)
+//        ));
+//        marketProducts.forEach(marketProduct -> save(marketProduct));
+//    }
+//}
 
 //    @Override
 //    public String toString() {

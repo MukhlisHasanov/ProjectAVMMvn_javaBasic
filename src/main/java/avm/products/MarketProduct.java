@@ -10,7 +10,7 @@ package avm.products;
 public class MarketProduct extends BaseProduct {
     private static int idCounter = 0;
 
-    public MarketProduct(String name, float price, int quantity) {
+    public MarketProduct(String name, int quantity, float price) {
         super(name, quantity, price);
         this.id = ++idCounter;
     }
@@ -27,7 +27,7 @@ public class MarketProduct extends BaseProduct {
     public String toString() {
         return "[id: " + id +
                 ", Product: " + name +
-                ", Price" + price + " EUR, " +
+                ", Price " + price + " EUR, " +
                 "Quan-ty: " + quantity + "]";
     }
 }

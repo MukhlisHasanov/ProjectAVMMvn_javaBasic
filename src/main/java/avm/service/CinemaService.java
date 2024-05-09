@@ -4,6 +4,8 @@ import avm.products.MovieProduct;
 import avm.repository.MovieRepository;
 import avm.products.Client;
 
+import java.sql.SQLException;
+
 /**
  * AIT-TR, Cohort 42.1, Java Basic, Project AVM/Cinema
  * @author Rodion
@@ -11,7 +13,7 @@ import avm.products.Client;
  */
 public class CinemaService extends BaseService<MovieProduct, MovieRepository> {
 
-    public CinemaService(Client client, MovieRepository movieRepository) {
+    public CinemaService(Client client, MovieRepository movieRepository) throws SQLException {
         super(client, movieRepository);
     }
 

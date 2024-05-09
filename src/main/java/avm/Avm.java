@@ -9,13 +9,15 @@ import avm.service.CinemaService;
 import avm.service.ClothService;
 import avm.service.MarketService;
 
+import java.sql.SQLException;
+
 /**
  * AIT-TR, Cohort 42.1, Java Basic, Project #2 AVM
  * @author Mukhlis
  * @version May-2024
  */
 public class Avm {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
         final String SQLITE_DB_AVM = "jdbc:sqlite:C:/temp/AvmDB.db";
 
