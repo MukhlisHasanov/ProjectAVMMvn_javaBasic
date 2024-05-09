@@ -43,7 +43,7 @@ public abstract class BaseProduct {
         this.quantity = quantity;
     }
 
-    
+
 
     @Override
     public String toString() {

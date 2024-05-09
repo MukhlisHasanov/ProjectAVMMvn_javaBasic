@@ -21,7 +21,7 @@ public class Avm {
 
         final String SQLITE_DB_AVM = "jdbc:sqlite:C:/temp/AvmDB.db";
 
-        ClientRepository clientRepository = new ClientRepository();
+        ClientRepository clientRepository = new ClientRepository(SQLITE_DB_AVM);
         ClientController clientController = new ClientController(clientRepository);
         clientRepository.initClient();
         Client client = clientController.start();

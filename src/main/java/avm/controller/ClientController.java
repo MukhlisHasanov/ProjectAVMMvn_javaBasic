@@ -28,7 +28,7 @@ public class ClientController {
             int clientId = scanner.nextInt();
             scanner.nextLine();
 
-            this.client = clientRepository.get(clientId);
+            this.client = clientRepository.findById(clientId);
             if (client != null) {
                 System.out.println("\nHello, " + client.getName() + "!\n");
             } else {
@@ -53,9 +53,13 @@ public class ClientController {
         int age = scanner.nextInt();
         scanner.nextLine();
 
-        Client client = new Client(name, age);
+        System.out.print("Enter money in the wallet: ");
+        int wallet = scanner.nextInt();
+        scanner.nextLine();
 
-        clientRepository.put(client);
+        Client client = new Client(name, age, wallet);
+
+        clientRepository.save(client);
         System.out.println("Congratulations you are registered! Your id: " + client.getId());
         System.out.println("\nHello, " + client.getName() + "!\n");
         return client;
