@@ -21,6 +21,7 @@ public class MarketProduct extends BaseProduct {
 
     public MarketProduct(int id, String name, int quantity, float price) {
         super(name, quantity, price);
+        this.id = id;
     }
 
     @Override

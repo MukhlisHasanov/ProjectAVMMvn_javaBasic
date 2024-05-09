@@ -17,6 +17,13 @@ public class MarketService extends BaseService<MarketProduct, MarketRepository> 
         super(client, marketRepository);
     }
 
+    public boolean update(int id, String name, int quantity, float price) {
+        MarketProduct updProduct = repository.findById(id);
+        if (updProduct != null) {
+
+        }
+    }
+
     @Override
     protected MarketProduct createProduct(MarketProduct product) {
         return new MarketProduct(product);

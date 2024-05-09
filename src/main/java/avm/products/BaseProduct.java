@@ -19,9 +19,6 @@ public abstract class BaseProduct {
         this.quantity = quantity;
     }
 
-    public BaseProduct(String name, String genre, float price, int quantity) {
-    }
-
     public Integer getId() {
         return id;
     }

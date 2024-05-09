@@ -111,6 +111,10 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
         repository.findAll().forEach(System.out::println);
     }
 
+    public T findById(int id) {
+        return repository.findById(id);
+    }
+
     protected abstract T createProduct(T product);
 
     @Override
