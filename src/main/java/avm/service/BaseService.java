@@ -16,7 +16,7 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
     Connection connection = DriverManager.getConnection(AvmDB);
     protected R repository;
     protected Map<Integer, T> productList;
-    private Client client;
+    private final Client client;
 
     public BaseService(Client client, R repository) throws SQLException {
         this.repository = repository;
@@ -25,7 +25,7 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
     }
 
     public String addToOrder(int id, int quantity) {
-        T product = (T) repository.findById(id);
+        T product = repository.findById(id);
         if (product != null) {
             if (product.getQuantity() >= quantity) {
                 if (productList.containsKey(id)) {
@@ -39,13 +39,13 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
                 }
                 product.setQuantity(product.getQuantity() - quantity);
 
-        try (PreparedStatement psu = connection.prepareStatement("UPDATE market SET quantity = ? WHERE id = ?")) {
-            psu.setInt(1, product.getQuantity());
-            psu.setInt(2, id);
-            psu.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+                try (PreparedStatement psu = connection.prepareStatement("UPDATE market SET quantity = ? WHERE id = ?")) {
+                    psu.setInt(1, product.getQuantity());
+                    psu.setInt(2, id);
+                    psu.executeUpdate();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 return ("You added: " + quantity + " pcs of " + product.getName() + " to shopping cart");
             }
             return ("Not enough pcs, available only " + product.getQuantity() + " pcs");
@@ -86,7 +86,7 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
             }
 
             try (PreparedStatement psu = connection.prepareStatement("UPDATE market SET quantity = quantity + ? WHERE id = ?")) {
-                psu.setInt(1, product.getQuantity());
+                psu.setInt(1, quantityToRemove);
                 psu.setInt(2, id);
                 psu.executeUpdate();
             } catch (SQLException e) {
@@ -118,9 +118,7 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
         StringBuilder sb = new StringBuilder();
         sb.append("\nCart of client: " + client + "\n");
         sb.append("Shopping cart: \n");
-        productList.forEach((id, marketProduct) -> {
-            sb.append(marketProduct).append("\n");
-        });
+        productList.forEach((id, marketProduct) -> sb.append(marketProduct).append("\n"));
         return sb.toString();
     }
 }

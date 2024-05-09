@@ -35,7 +35,7 @@ public class MarketRepository implements ProductRepository<MarketProduct> {
              Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(SQL_FIND_ALL);
             while (rs.next()) {
-                products.add(new MarketProduct(
+                products.add(new MarketProduct(rs.getInt("id"),
                         rs.getString("name"),
                         rs.getInt("quantity"),
                         rs.getFloat("price")));

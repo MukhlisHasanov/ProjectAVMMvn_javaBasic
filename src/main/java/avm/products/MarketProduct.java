@@ -10,10 +10,10 @@ package avm.products;
 public class MarketProduct extends BaseProduct {
     private static int idCounter = 0;
 
-    public MarketProduct(String name, int quantity, float price) {
-        super(name, quantity, price);
-        this.id = ++idCounter;
-    }
+//    public MarketProduct(String name, int quantity, float price) {
+//        super(name, quantity, price);
+//        this.id = ++idCounter;
+//    }
 
     public MarketProduct(MarketProduct product) {
         super(product.getName(), product.getQuantity(), product.getPrice());
@@ -21,6 +21,7 @@ public class MarketProduct extends BaseProduct {
 
     public MarketProduct(int id, String name, int quantity, float price) {
         super(name, quantity, price);
+        this.id = id;
     }
 
     @Override
