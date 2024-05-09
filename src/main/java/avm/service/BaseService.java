@@ -126,7 +126,7 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\nCart of client: " + client + "\n");
-        sb.append("Shopping cart: \n");
+        sb.append("\nShopping cart: \n");
         productList.forEach((id, marketProduct) -> sb.append(marketProduct).append("\n"));
         return sb.toString();
     }

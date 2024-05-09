@@ -84,7 +84,7 @@ public class MarketController {
                     if (choice.equals("y")) {
                         service.payTheBill();
 
-                        System.out.println("Money in the wallet: "+ client.getWallet() + " EUR");
+                        System.out.println("\nMoney in the wallet: "+ client.getWallet() + " EUR");
                     } else if (choice.equals("n")) {
                         run();
                     } else {
@@ -93,7 +93,7 @@ public class MarketController {
                     }
                     break;
                 case 'w':
-                    client.getWallet();
+                    System.out.println("\nMoney in the wallet: "+ client.getWallet() + " EUR");
                     break;
                 case 'b':
                     break;
