@@ -2,7 +2,9 @@ package avm;
 
 import avm.controller.AvmController;
 import avm.controller.ClientController;
+import avm.controller.PersonalController;
 import avm.products.Client;
+import avm.products.Personal;
 import avm.repository.*;
 import avm.service.CafeService;
 import avm.service.CinemaService;
@@ -10,6 +12,7 @@ import avm.service.ClothService;
 import avm.service.MarketService;
 
 import java.sql.SQLException;
+import java.util.Scanner;
 
 /**
  * AIT-TR, Cohort 42.1, Java Basic, Project #2 AVM
@@ -18,13 +21,27 @@ import java.sql.SQLException;
  */
 public class Avm {
     public static void main(String[] args) throws SQLException {
-
+        Scanner scanner = new Scanner(System.in);
         final String SQLITE_DB_AVM = "jdbc:sqlite:C:/temp/AvmDB.db";
+        Client client = null;
+        Personal personal = null;
 
         ClientRepository clientRepository = new ClientRepository(SQLITE_DB_AVM);
+        PersonalRepository personalRepository = new PersonalRepository(SQLITE_DB_AVM);
         ClientController clientController = new ClientController(clientRepository);
-        clientRepository.initClient();
-        Client client = clientController.start();
+        PersonalController personalController = new PersonalController(personalRepository);
+
+        System.out.println("Welcome to AVM!");
+        System.out.print("[P]ersonal or [C]lient:");
+        String choice = scanner.nextLine().toLowerCase();
+        if (choice.equals("p")) {
+            personal = personalController.start();
+        } else if (choice.equals("c")) {
+            client = clientController.start();
+        } else {
+            System.out.println("Unrecognized command. Try one more time");
+        }
+//        clientRepository.initClient();
 
         MarketRepository marketRepository = new MarketRepository(SQLITE_DB_AVM);
         ClothRepository clothRepository = new ClothRepository(SQLITE_DB_AVM);

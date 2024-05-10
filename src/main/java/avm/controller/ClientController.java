@@ -14,13 +14,13 @@ public class ClientController {
     private Client client;
     private Scanner scanner;
     private ClientRepository clientRepository;
+
     public ClientController(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
         this.scanner = new Scanner(System.in);
     }
 
     public Client start() {
-        System.out.println("Welcome to AVM!");
         System.out.print("Do you have client account? [y]es, [n]o:");
         String choice = scanner.nextLine().toLowerCase();
         if (choice.equals("y")) {

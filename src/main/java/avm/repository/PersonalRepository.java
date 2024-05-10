@@ -19,6 +19,10 @@ public class PersonalRepository {
     private final String SQL_FIND_ALL = "SELECT * FROM personal";
     private final String SQL_DELETE_BY_ID = "DELETE FROM personal WHERE id = ?";
 
+    public PersonalRepository(String dbName) {
+        this.dbName = dbName;
+    }
+
     public void save(Personal personal) {
         try (Connection connection = DriverManager.getConnection(dbName);
              PreparedStatement psi = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
