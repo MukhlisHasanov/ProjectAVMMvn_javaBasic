@@ -53,10 +53,6 @@ public class PersonalController {
         String department = scanner.nextLine();
         scanner.nextLine();
 
-        System.out.print("Enter money in the wallet: ");
-        int wallet = scanner.nextInt();
-        scanner.nextLine();
-
         Personal personal = new Personal(name, department);
 
         personalRepository.save(personal);
