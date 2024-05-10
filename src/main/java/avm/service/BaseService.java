@@ -97,7 +97,7 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
             }
             repositoryProduct.setQuantity(repositoryProduct.getQuantity() + quantityToRemove);
 
-            return ("You removed: " + currentQuantity + " pcs of " + product.getName() + " from shopping cart");
+            return ("You removed: " + quantityToRemove + " pcs of " + product.getName() + " from shopping cart");
         }
         return ("Incorrect ID entry");
     }

@@ -1,7 +1,6 @@
 package avm.controller;
 
 import avm.products.Client;
-import avm.repository.ClientRepository;
 import avm.service.MarketService;
 
 import java.util.Scanner;
@@ -48,7 +47,8 @@ public class MarketController {
                     if (input.length > 1) {
                         id = Integer.valueOf(input[0].trim());
                         quantity = Integer.valueOf(input[1].trim());
-                        service.addToOrder(id, quantity);
+                        String answer = service.addToOrder(id, quantity);
+                        System.out.println(answer);
                     } else {
                         if (Integer.valueOf(input[0].trim())==0) {
                             break;
@@ -62,14 +62,16 @@ public class MarketController {
                     if (input.length > 1) {
                         id = Integer.valueOf(input[0].trim());
                         quantity = Integer.valueOf(input[1].trim());
-                        service.removeFromOrder(id, quantity);
+                        String answer = service.removeFromOrder(id, quantity);
+                        System.out.println(answer);
 
                     } else {
                         if (Integer.valueOf(input[0].trim())==0) {
                             break;
                         }
                         id = Integer.valueOf(input[0].trim());
-                        service.removeFromOrder(id);
+                        String answer = service.removeFromOrder(id);
+                        System.out.println(answer);
                     }
                     break;
                 case 'p':
@@ -82,14 +84,13 @@ public class MarketController {
                     System.out.println("Do you want to pay the bill? [y]es/[n]o" );
                     String choice = scanner.nextLine().toLowerCase();
                     if (choice.equals("y")) {
-                        service.payTheBill();
-
+                        Float answer = service.payTheBill();
+                        System.out.println(answer);
                         System.out.println("\nMoney in the wallet: "+ client.getWallet() + " EUR");
                     } else if (choice.equals("n")) {
-                        run();
+                        // TODO rewrite code
                     } else {
                         System.out.println("INCORRECT CHOICE! PLEASE ENTER Y/N");
-                        break;
                     }
                     break;
                 case 'w':
