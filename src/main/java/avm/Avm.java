@@ -21,6 +21,7 @@ import java.util.Scanner;
  */
 public class Avm {
     public static void main(String[] args) throws SQLException {
+        String choice;
         Scanner scanner = new Scanner(System.in);
         final String SQLITE_DB_AVM = "jdbc:sqlite:C:/temp/AvmDB.db";
         Client client = null;
@@ -31,33 +32,40 @@ public class Avm {
         ClientController clientController = new ClientController(clientRepository);
         PersonalController personalController = new PersonalController(personalRepository);
 
-        System.out.println("Welcome to AVM!");
-        System.out.print("[P]ersonal or [C]lient:");
-        String choice = scanner.nextLine().toLowerCase();
-        if (choice.equals("p")) {
-            personal = personalController.start();
-        } else if (choice.equals("c")) {
-            client = clientController.start();
-        } else {
-            System.out.println("Unrecognized command. Try one more time");
-        }
-//        clientRepository.initClient();
-
         MarketRepository marketRepository = new MarketRepository(SQLITE_DB_AVM);
         ClothRepository clothRepository = new ClothRepository(SQLITE_DB_AVM);
         MovieRepository movieRepository = new MovieRepository(SQLITE_DB_AVM);
         CafeRepository cafeRepository = new CafeRepository(SQLITE_DB_AVM);
 
-        MarketService marketService = new MarketService(client,marketRepository);
-        ClothService clothService = new ClothService(client, clothRepository);
-        CinemaService cinemaService = new CinemaService(client, movieRepository);
-        CafeService cafeService = new CafeService(client,cafeRepository);
+        do {
+            System.out.println("Welcome to AVM!");
+            System.out.print("[P]ersonal, [C]lient, E[x]it: ");
+            choice = scanner.nextLine().toLowerCase();
+            switch (choice) {
+                case "p":
+                    personal = personalController.start();
+                    break;
+                case "c":
+                    client = clientController.start();
+                    MarketService marketService = new MarketService(client, marketRepository);
+                    ClothService clothService = new ClothService(client, clothRepository);
+                    CinemaService cinemaService = new CinemaService(client, movieRepository);
+                    CafeService cafeService = new CafeService(client, cafeRepository);
 
+                    new AvmController(marketService, clothService, cinemaService, cafeService).run();
+                    break;
+                case "x":
+                    System.out.println("Goodbye!");
+                    break;
+                default:
+                    System.out.println("Unrecognized command. Try one more time");
+            }
+        } while (choice.equals("x"));
+
+//        clientRepository.initClient();
 //        marketRepository.initMarket();
 //        clothRepository.initCloth();
 //        movieRepository.initMovie();
 //        cafeRepository.initCafe();
-
-        new AvmController(marketService, clothService, cinemaService,cafeService).run();
     }
 }

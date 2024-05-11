@@ -21,28 +21,29 @@ public class PersonalController {
     }
 
     public Personal start() {
-        System.out.print("Do you have personal account? [y]es, [n]o:");
-        String choice = scanner.nextLine().toLowerCase();
-        if (choice.equals("y")) {
-            System.out.print("Enter account ID: ");
-            int clientId = scanner.nextInt();
-            scanner.nextLine();
+        do {
+            System.out.print("Do you have personal account? [y]es, [n]o:");
+            String choice = scanner.nextLine().toLowerCase();
+            if (choice.equals("y")) {
+                System.out.print("Enter account ID: ");
+                int clientId = scanner.nextInt();
+                scanner.nextLine();
 
-            this.personal = personalRepository.findById(clientId);
-            if (personal != null) {
-                System.out.println("\nHello, " + personal.getName() + "!\n");
-            } else {
-                System.out.println("ID NOT FOUND! Please check ID or sign up");
+                this.personal = personalRepository.findById(clientId);
+                if (personal != null) {
+                    System.out.println("\nHello, " + personal.getName() + "!\n");
+                    return personal;
+                } else {
+                    System.out.println("ID NOT FOUND! Please check ID or sign up");
+                    return registerNewPersonal();
+                }
+            } else if (choice.equals("n")) {
+                System.out.println("Please, sign up");
                 return registerNewPersonal();
+            } else {
+                System.out.println("Unrecognized command. Try one more time");
             }
-        } else if (choice.equals("n")) {
-            System.out.println("Please, sign up");
-            return registerNewPersonal();
-        } else {
-            System.out.println("Unrecognized command. Try one more time");
-            start();
-        }
-        return personal;
+        } while (true);
     }
 
     private Personal registerNewPersonal() {

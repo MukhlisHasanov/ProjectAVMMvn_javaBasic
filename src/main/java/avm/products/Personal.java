@@ -6,16 +6,17 @@ package avm.products;
  * @version May-2024
  */
 public class Personal {
+    //PersonalState state;
     Integer id;
     String name;
-    String department;
+    PersonalState department;
 
-    public Personal(String name, String department) {
+    public Personal(String name, PersonalState department) {
         this.name = name;
         this.department = department;
     }
 
-    public Personal(Integer id, String name, String department) {
+    public Personal(Integer id, String name, PersonalState department) {
         this.id = id;
         this.name = name;
         this.department = department;
@@ -37,15 +38,11 @@ public class Personal {
         this.name = name;
     }
 
-    public String getDepartment() {
+    public PersonalState getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public void update(String name, String department) {
+    public void update(String name, PersonalState department) {
         this.name = name;
         this.department = department;
     }
