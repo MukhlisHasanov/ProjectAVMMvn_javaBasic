@@ -38,7 +38,7 @@ public class CafeServiceMenu {
                     if (input.length > 2) {
                         String name = input[0].trim();
                         int quantity = Integer.valueOf(input[1].trim());
-                        int price = Integer.valueOf(input[2].trim());
+                        float price = Float.valueOf(input[2].trim());
                         cafeRepository.save(new CafeProduct(name, quantity, price));
                         System.out.println("Product added!");
                     } else {
@@ -60,7 +60,7 @@ public class CafeServiceMenu {
                         if (input.length > 2) {
                             String name = input[0].trim();
                             int quantity = Integer.valueOf(input[1].trim());
-                            int price = Integer.valueOf(input[2].trim());
+                            float price = Float.valueOf(input[2].trim());
                             cafeRepository.save(new CafeProduct(id, name, quantity, price));
                             System.out.println("Product updated!");
                         } else {

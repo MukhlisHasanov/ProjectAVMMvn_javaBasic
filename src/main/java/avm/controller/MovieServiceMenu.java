@@ -38,7 +38,7 @@ public class MovieServiceMenu {
                     if (input.length > 3) {
                         String name = input[0].trim();
                         String genre = input[1].trim();;
-                        int price = Integer.valueOf(input[2].trim());
+                        float price = Float.valueOf(input[2].trim());
                         int quantity = Integer.valueOf(input[3].trim());
                         movieRepository.save(new MovieProduct(name, genre, price, quantity));
                         System.out.println("Product added!");
@@ -61,7 +61,7 @@ public class MovieServiceMenu {
                         if (input.length > 3) {
                             String name = input[0].trim();
                             String genre = input[1].trim();
-                            int price = Integer.valueOf(input[2].trim());
+                            float price = Float.valueOf(input[2].trim());
                             int quantity = Integer.valueOf(input[3].trim());
                             movieRepository.save(new MovieProduct(id, name, genre, price, quantity));
                             System.out.println("Product updated!");
