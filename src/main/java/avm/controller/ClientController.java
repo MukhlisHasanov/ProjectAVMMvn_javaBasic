@@ -54,7 +54,11 @@ public class ClientController {
         int age = scanner.nextInt();
         scanner.nextLine();
 
-        Client client = new Client(name, age);
+        System.out.print("Enter money in the wallet: ");
+        int wallet = scanner.nextInt();
+        scanner.nextLine();
+
+        Client client = new Client(name, age, wallet);
 
         clientRepository.put(client);
         System.out.println("Congratulations you are registered! Your id: " + client.getId());
