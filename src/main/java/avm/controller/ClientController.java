@@ -20,6 +20,7 @@ public class ClientController {
     }
 
     public Client start() {
+        System.out.println("Brunch Valerian");
         System.out.println("Welcome to AVM!");
         System.out.print("Do you have client account? [y]es, [n]o:");
         String choice = scanner.nextLine().toLowerCase();
