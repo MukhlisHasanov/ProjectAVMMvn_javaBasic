@@ -1,6 +1,7 @@
 package avm.repository;
 
 import avm.products.Personal;
+import avm.products.PersonalState;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class PersonalRepository {
             if (personal.getId() == null) {
                 // insert record
                 psi.setString(1, personal.getName());
-                psi.setString(2, personal.getDepartment());
+                psi.setString(2, personal.getDepartment().name());
                 psi.executeUpdate();
 
                 ResultSet rs = psi.getGeneratedKeys();
@@ -40,7 +41,7 @@ public class PersonalRepository {
             } else {
                 // update record
                 psu.setString(1, personal.getName());
-                psu.setString(2, personal.getDepartment());
+                psu.setString(2, personal.getDepartment().name());
                 psu.setInt(3, personal.getId());
                 psu.executeUpdate();
             }
@@ -58,7 +59,7 @@ public class PersonalRepository {
             if (rs.next()) {
                 personal = new Personal(rs.getInt("id"),
                         rs.getString("name"),
-                        rs.getString("department"));
+                        PersonalState.valueOf(rs.getString("department")));
             }
             return personal;
         } catch (SQLException e) {
@@ -85,7 +86,7 @@ public class PersonalRepository {
                 personals.add(new Personal(
                         rs.getInt("id"),
                         rs.getString("name"),
-                        rs.getString("department")));
+                        PersonalState.valueOf(rs.getString("department"))));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

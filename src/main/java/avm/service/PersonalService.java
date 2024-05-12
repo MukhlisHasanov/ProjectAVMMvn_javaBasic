@@ -1,6 +1,7 @@
 package avm.service;
 
 import avm.products.Personal;
+import avm.products.PersonalState;
 import avm.repository.PersonalRepository;
 
 public class PersonalService {
@@ -10,11 +11,11 @@ public class PersonalService {
         this.repository = repository;
     }
 
-    public void add(String name, String department) {
+    public void add(String name, PersonalState department) {
         Personal personal = new Personal(null, name, department);
         repository.save(personal);
     }
-    public boolean update(int id, String name, String department) {
+    public boolean update(int id, String name, PersonalState department) {
         Personal updPersonal = repository.findById(id);
         if (updPersonal != null) {
             updPersonal.update(name, department);

@@ -1,6 +1,7 @@
 package avm.controller;
 
 import avm.products.Personal;
+import avm.products.PersonalState;
 import avm.repository.PersonalRepository;
 
 import java.util.Scanner;
@@ -15,9 +16,9 @@ public class PersonalController {
     private Scanner scanner;
     private PersonalRepository personalRepository;
 
-    public PersonalController(PersonalRepository personalRepository) {
+    public PersonalController(Scanner scanner, PersonalRepository personalRepository) {
         this.personalRepository = personalRepository;
-        this.scanner = new Scanner(System.in);
+        this.scanner = scanner;
     }
 
     public Personal start() {
@@ -47,15 +48,30 @@ public class PersonalController {
     }
 
     private Personal registerNewPersonal() {
+        PersonalState department = null;
         System.out.print("Enter name: ");
         String name = scanner.nextLine();
 
-        System.out.print("Enter department: ");
-        String department = scanner.nextLine();
-        scanner.nextLine();
-
+        System.out.print("Enter department[A]DMIN, [M]ARKET, [C]AFE, C[L]OTH, MO[V]IE]: ");
+        String choice = scanner.nextLine().toLowerCase();
+        switch (choice) {
+            case "a":
+                department = PersonalState.ADMIN;
+                break;
+            case "m":
+                department = PersonalState.MARKET;
+                break;
+            case "c":
+                department = PersonalState.CAFE;
+                break;
+            case "l":
+                department = PersonalState.CLOTH;
+                break;
+            case "v":
+                department = PersonalState.MOVIE;
+                break;
+        }
         Personal personal = new Personal(name, department);
-
         personalRepository.save(personal);
         System.out.println("Congratulations you are registered! Your id: " + personal.getId());
         System.out.println("\nHello, " + personal.getName() + "!\n");

@@ -3,6 +3,7 @@ package avm;
 import avm.controller.AvmController;
 import avm.controller.ClientController;
 import avm.controller.PersonalController;
+import avm.controller.ServiceController;
 import avm.products.Client;
 import avm.products.Personal;
 import avm.repository.*;
@@ -30,7 +31,7 @@ public class Avm {
         ClientRepository clientRepository = new ClientRepository(SQLITE_DB_AVM);
         PersonalRepository personalRepository = new PersonalRepository(SQLITE_DB_AVM);
         ClientController clientController = new ClientController(clientRepository);
-        PersonalController personalController = new PersonalController(personalRepository);
+        PersonalController personalController = new PersonalController(scanner,personalRepository);
 
         MarketRepository marketRepository = new MarketRepository(SQLITE_DB_AVM);
         ClothRepository clothRepository = new ClothRepository(SQLITE_DB_AVM);
@@ -44,6 +45,11 @@ public class Avm {
             switch (choice) {
                 case "p":
                     personal = personalController.start();
+                    new ServiceController(scanner, personal,
+                                          marketRepository,
+                                          cafeRepository,
+                                          clothRepository,
+                                          movieRepository).run();
                     break;
                 case "c":
                     client = clientController.start();
@@ -61,11 +67,5 @@ public class Avm {
                     System.out.println("Unrecognized command. Try one more time");
             }
         } while (choice.equals("x"));
-
-//        clientRepository.initClient();
-//        marketRepository.initMarket();
-//        clothRepository.initCloth();
-//        movieRepository.initMovie();
-//        cafeRepository.initCafe();
     }
 }
