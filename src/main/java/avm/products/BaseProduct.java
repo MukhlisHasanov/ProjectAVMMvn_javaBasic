@@ -8,18 +8,21 @@ package avm.products;
 
 // This is base class from future product classes
 public abstract class BaseProduct {
-    protected int id;
+    protected Integer id;
     protected String name;
     protected float price;
     protected int quantity;
 
-    public BaseProduct(String name, float price, int quantity) {
+    public BaseProduct(String name, int quantity, float price) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
 
-    public int getId() {
+    public BaseProduct(String name, String genre, float price, int quantity) {
+    }
+
+    public Integer getId() {
         return id;
     }
 

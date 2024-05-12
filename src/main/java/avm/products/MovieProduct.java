@@ -12,15 +12,22 @@ public class MovieProduct extends BaseProduct{
     private static int idCounter = 0;
 
     public MovieProduct(String name, String genre, float price, int quantity) {
-        super(name, price, quantity);
+        super(name, quantity, price);
         this.genre = genre;
         this.id = ++idCounter;
     }
 
-    public MovieProduct(MovieProduct product) {
-        super(product.getName(), product.getPrice(), product.getQuantity());
+    public MovieProduct(MovieProduct movieProduct) {
+        super(movieProduct.getName(),  movieProduct.getGenre(), movieProduct.getPrice(), movieProduct.getQuantity());
     }
 
+    public MovieProduct(int id, String name, String genre, float price, int quantity) {
+        super(name, genre, price, quantity);
+    }
+
+    public String getGenre() {
+        return genre;
+    }
     @Override
     public String toString() {
         return "[id: " + id +

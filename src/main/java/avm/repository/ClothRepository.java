@@ -3,89 +3,103 @@ package avm.repository;
 import avm.products.ClothProduct;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * AIT-TR, Cohort 42.1, Java Basic, Project AVM/ClothShop
  * @author Valerian
- * @version Mai-2024
+ * @version Apr-2024
  */
-public  class ClothRepository implements ProductRepository<ClothProduct>{
-    //private Map<Integer, ClothProduct> clothMap;
-    private String avmDB;
-    private final String SQL_INSERT = "INSERT INTO cloth (name, size, price, quantity) VALUES (?,?,?,?)";
+public class ClothRepository implements ProductRepository<ClothProduct> {
+//    private Map<Integer, ClothProduct> clothMap;
+
+    private String AvmDB;
+    private final String SQL_INSERT = "INSERT INTO cloth (name, size, quantity, price) VALUES (?, ?, ?, ?)";
+    private final String SQL_UPDATE = "UPDATE cloth SET name = ?, size = ?, quantity = ?, price = ? WHERE id = ?";
     private final String SQL_FIND_BY_ID = "SELECT * FROM cloth WHERE id = ?";
     private final String SQL_FIND_ALL = "SELECT * FROM cloth";
     private final String SQL_DELETE_BY_ID = "DELETE FROM cloth WHERE id = ?";
 
-    public ClothRepository(String avmDB) {
-      //  clothMap = new HashMap<>();
-        this.avmDB = avmDB;
+//    public ClothRepository() {
+////        clothMap = new HashMap<>();
+//    }
+
+    public ClothRepository(String AvmDB) {
+        this.AvmDB = AvmDB;
     }
 
     @Override
-    public void put(ClothProduct product) {
-
+    public Collection<ClothProduct> findAll() {
+        Collection<ClothProduct> clothes = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(AvmDB);
+             Statement stmt = connection.createStatement()) {
+            ResultSet rs = stmt.executeQuery(SQL_FIND_ALL);
+            while (rs.next()) {
+                clothes.add(new ClothProduct(
+                        rs.getString("name"),
+                        rs.getString("size"),
+                        rs.getInt("quantity"),
+                        rs.getFloat("price")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return clothes;
     }
 
-    @Override
-    public ClothProduct get(int id) {
-        return null;
-    }
-
-    @Override
-    public void remove(int id) {
-
-    }
 
     @Override
     public void save(ClothProduct clothProduct) {
-        if (clothProduct.getId() == null) {
-            try (Connection connection = DriverManager.getConnection(avmDB);
-                 PreparedStatement ps = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS)) {
-                ps.setString(1, clothProduct.getName());
-                ps.setString(2, clothProduct.getSize());
-                ps.setFloat(3, clothProduct.getPrice());
-                ps.setInt(4,clothProduct.getQuantity());
-                ps.executeUpdate();
+        try (Connection connection = DriverManager.getConnection(AvmDB);
+             PreparedStatement psi = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement psu = connection.prepareStatement(SQL_UPDATE)) {
+            if (clothProduct.getId() == null) {
+                psi.setString(1, clothProduct.getName());
+                psi.setString(2, clothProduct.getSize());
+                psi.setInt(3, clothProduct.getQuantity());
+                psi.setFloat(4, clothProduct.getPrice());
+                psi.executeUpdate();
 
-                ResultSet rs = ps.getGeneratedKeys();
-                Integer clothProductId = null;
+                ResultSet rs = psi.getGeneratedKeys();
                 if (rs.next()) {
-                    clothProductId = rs.getInt(1);
+                    clothProduct.setId(rs.getInt(1));
                 }
-                System.out.println(clothProductId);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            } else {
+                psu.setString(1, clothProduct.getName());
+                psu.setString(2, clothProduct.getSize());
+                psu.setInt(3, clothProduct.getQuantity());
+                psu.setFloat(4, clothProduct.getPrice());
+                psu.setInt(5, clothProduct.getId());
+                psu.executeUpdate();
             }
-        } else {
-            // TODO
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
-    @Override
+
+
     public ClothProduct findById(Integer id) {
         ClothProduct clothProduct = null;
-        try (Connection connection = DriverManager.getConnection(avmDB);
-             PreparedStatement ps = connection.prepareStatement(SQL_FIND_BY_ID)) {
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+        try (Connection connection = DriverManager.getConnection(AvmDB);
+             PreparedStatement psm = connection.prepareStatement(SQL_FIND_BY_ID)) {
+            psm.setInt(1, id);
+            ResultSet rs = psm.executeQuery();
             if (rs.next()) {
                 clothProduct = new ClothProduct(rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("size"),
-                        rs.getInt("price"),
-                        rs.getInt("quantity"));
+                        rs.getInt("quantity"),
+                        rs.getFloat("price"));
             }
             return clothProduct;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
     @Override
-    public void remove(Integer id) {
-        try (Connection connection = DriverManager.getConnection(avmDB);
+    public void delete(int id) {
+        try (Connection connection = DriverManager.getConnection(AvmDB);
              PreparedStatement ps = connection.prepareStatement(SQL_DELETE_BY_ID)) {
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -93,56 +107,18 @@ public  class ClothRepository implements ProductRepository<ClothProduct>{
             throw new RuntimeException(e);
         }
     }
-    @Override
-    public Collection<ClothProduct> findAll() {
-        Collection<ClothProduct> clothProducts = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(avmDB);
-             Statement stmt = connection.createStatement()) {
-            ResultSet rs = stmt.executeQuery(SQL_FIND_ALL);
-            while (rs.next()) {
-                clothProducts.add(new ClothProduct(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("size"),
-                        rs.getInt("price"),
-                        rs.getInt("quantity")));
-
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return clothProducts;
-    }
-
-
-
-
-
-//    @Override
-//    public void put(ClothProduct clothProduct) {
-//        clothMap.put(clothProduct.getId(), clothProduct);
-//    }
-//
-//    @Override
-//    public ClothProduct get(int id) {
-//        return clothMap.get(id);
-//    }
-//
-//    @Override
-//    public void remove(int id) {
-//        clothMap.remove(id);
-//    }
 
     public void initCloth() {
         List<ClothProduct> clothProducts = new ArrayList<>(List.of(
-                new ClothProduct("Jeans", "M", 150, 100),
-                new ClothProduct("Esprit","M", 500, 200),
-                new ClothProduct("Jeans","M", 90,  300),
-                new ClothProduct("Boss","M", 150, 400),
-                new ClothProduct("Hilfiger","M", 9, 500)
+                new ClothProduct("Jeans", "S", 50, 150),
+                new ClothProduct("Esprit", "M", 40, 500),
+                new ClothProduct("Jeans", "L", 30, 90),
+                new ClothProduct("Boss", "XL", 50, 150),
+                new ClothProduct("Hilfiger", "XXL", 20, 9)
         ));
         clothProducts.forEach(clothProduct -> save(clothProduct));
     }
+}
 
 //    @Override
 //    public String toString() {
@@ -153,4 +129,4 @@ public  class ClothRepository implements ProductRepository<ClothProduct>{
 //        });
 //        return sb.toString();
 //    }
-}
+//}

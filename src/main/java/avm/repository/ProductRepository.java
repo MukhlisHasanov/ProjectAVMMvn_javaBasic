@@ -2,8 +2,12 @@ package avm.repository;
 
 import avm.products.BaseProduct;
 
-public interface ProductRepository <T extends BaseProduct>{
-    void put(T product);
-    T get(int id);
-    void remove(int id);
+import java.util.Collection;
+
+public interface ProductRepository <T extends BaseProduct> {
+
+    Collection<T> findAll();
+    void save(T product);
+    T findById(Integer id);
+    void delete(int id);
 }
