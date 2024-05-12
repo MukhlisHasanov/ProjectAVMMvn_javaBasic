@@ -1,6 +1,7 @@
 package avm.controller;
 
 import avm.products.Client;
+import avm.products.Wallet;
 import avm.repository.ClientRepository;
 
 import java.util.Scanner;
@@ -14,7 +15,6 @@ public class ClientController {
     private Client client;
     private Scanner scanner;
     private ClientRepository clientRepository;
-
     public ClientController(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
         this.scanner = new Scanner(System.in);

@@ -8,16 +8,18 @@ package avm.products;
 
 // In this class we show the methods associated with the cafe class
 public class CafeProduct extends BaseProduct {
+//    private static int idCounter = 0;
 
     public CafeProduct(String name, int quantity, float price) {
         super(name, quantity, price);
+//        this.id = ++idCounter;
     }
 
     public CafeProduct(CafeProduct product) {
         super(product.getName(), product.getQuantity(), product.getPrice());
     }
 
-    public CafeProduct(Integer id, String name, int quantity, float price) {
+    public CafeProduct(int id, String name, int quantity, float price) {
         super(name, quantity, price);
         this.id = id;
     }
@@ -27,6 +29,6 @@ public class CafeProduct extends BaseProduct {
         return "[id: " + id +
                 ", Product: " + name +
                 ", Quan-ty: " + quantity +
-                ", Price: " + price + " EUR, " + "]";
+                ", Price: " + price + " EUR" + "]";
     }
 }

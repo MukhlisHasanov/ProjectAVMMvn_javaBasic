@@ -9,10 +9,12 @@ package avm.products;
 // In this class we show the methods associated with the cloth products class
 public class ClothProduct extends BaseProduct {
     private String size;
+//    private static int idCounter = 0;
 
     public ClothProduct(String name, String size, int quantity, float price) {
         super(name, quantity, price);
         this.size = size;
+//        this.id = ++idCounter;
     }
 
     public ClothProduct(ClothProduct clothProduct) {
@@ -23,7 +25,7 @@ public class ClothProduct extends BaseProduct {
     public ClothProduct(Integer id, String name, String size, int quantity, float price) {
         super(name, quantity, price);
         this.id = id;
-        this.size =size;
+        this.size = size;
     }
     public String getSize() {
         return size;
@@ -34,7 +36,7 @@ public class ClothProduct extends BaseProduct {
         return "[id: " + id +
                 ", Product: " + name +
                 ", Size: " + size +
-                ", Price: " + price + " EUR, " +
-                "Quan-ty: " + quantity + "]";
+                ", Quan-ty: " + quantity +
+                ", Price: " + price + " EUR" + "]";
     }
 }

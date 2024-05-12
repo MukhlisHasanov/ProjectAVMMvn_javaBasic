@@ -32,6 +32,8 @@ public class Avm {
         PersonalRepository personalRepository = new PersonalRepository(SQLITE_DB_AVM);
         ClientController clientController = new ClientController(clientRepository);
         PersonalController personalController = new PersonalController(scanner,personalRepository);
+//        clientRepository.initClient();
+//        Client client = clientController.start();
 
         MarketRepository marketRepository = new MarketRepository(SQLITE_DB_AVM);
         ClothRepository clothRepository = new ClothRepository(SQLITE_DB_AVM);
@@ -46,10 +48,10 @@ public class Avm {
                 case "p":
                     personal = personalController.start();
                     new ServiceController(scanner, personal,
-                                          marketRepository,
-                                          cafeRepository,
-                                          clothRepository,
-                                          movieRepository).run();
+                            marketRepository,
+                            cafeRepository,
+                            clothRepository,
+                            movieRepository).run();
                     break;
                 case "c":
                     client = clientController.start();
@@ -58,7 +60,7 @@ public class Avm {
                     CinemaService cinemaService = new CinemaService(client, movieRepository);
                     CafeService cafeService = new CafeService(client, cafeRepository);
 
-                    new AvmController(marketService, clothService, cinemaService, cafeService).run();
+                    new AvmController(marketService, clothService, cinemaService, cafeService, client).run();
                     break;
                 case "x":
                     System.out.println("Goodbye!");
@@ -69,3 +71,18 @@ public class Avm {
         } while (choice.equals("x"));
     }
 }
+
+//
+//        MarketService marketService = new MarketService(client,marketRepository);
+//        ClothService clothService = new ClothService(client, clothRepository);
+//        CinemaService cinemaService = new CinemaService(client, movieRepository);
+//        CafeService cafeService = new CafeService(client,cafeRepository);
+//
+////        marketRepository.initMarket();
+////        clothRepository.initCloth();
+////        movieRepository.initMovie();
+////        cafeRepository.initCafe();
+//
+//        new AvmController(marketService, clothService, cinemaService,cafeService, client).run();
+//    }
+//}

@@ -19,6 +19,9 @@ public abstract class BaseProduct {
         this.quantity = quantity;
     }
 
+//    public BaseProduct(String name, String genre, float price, int quantity) {
+//    }
+
     public Integer getId() {
         return id;
     }
@@ -42,8 +45,6 @@ public abstract class BaseProduct {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
-
 
     @Override
     public String toString() {

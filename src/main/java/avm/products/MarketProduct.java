@@ -8,10 +8,12 @@ package avm.products;
 
 // In this class we show the methods associated with the market products class
 public class MarketProduct extends BaseProduct {
+//    private static int idCounter = 0;
 
-    public MarketProduct(String name, int quantity, float price) {
-        super(name, quantity, price);
-    }
+//    public MarketProduct(String name, int quantity, float price) {
+//        super(name, quantity, price);
+//        this.id = ++idCounter;
+//    }
 
     public MarketProduct(MarketProduct product) {
         super(product.getName(), product.getQuantity(), product.getPrice());
@@ -22,16 +24,15 @@ public class MarketProduct extends BaseProduct {
         this.id = id;
     }
 
-    public void update(String name, int quantity, float price) {
-        this.name = name;
-        this.quantity = quantity;
-        this.price = price;
+    public MarketProduct(String name, int quantity, float price) {
+        super(name, quantity, price);
     }
+
     @Override
     public String toString() {
         return "[id: " + id +
                 ", Product: " + name +
                 ", Quan-ty: " + quantity +
-                ", Price " + price + " EUR, " + "]";
+                ", Price " + price + " EUR" + "]";
     }
 }
