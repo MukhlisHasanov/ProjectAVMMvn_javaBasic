@@ -7,12 +7,20 @@ package avm.products;
  */
 public class Client {
     float wallet;
-    int id, age;
+    Integer id;
+    int age;
     String name;
-    private static int idCounter = 0;
+//    private static int idCounter = 0;
 
     public Client(String name, int age, float wallet) {
-        this.id = ++idCounter;
+//        this.id = ++idCounter;
+        this.name = name;
+        this.age = age;
+        this.wallet = wallet;
+    }
+
+    public Client(Integer id, String name, int age, float wallet) {
+        this.id = id;
         this.name = name;
         this.age = age;
         this.wallet = wallet;
@@ -26,8 +34,20 @@ public class Client {
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public float getWallet() {
@@ -36,6 +56,11 @@ public class Client {
 
     public void setWallet(float wallet) {
         this.wallet = wallet;
+    }
+
+    public void update(String name, int age) {
+        this.name = name;
+        this.age = age;
     }
 
     @Override
