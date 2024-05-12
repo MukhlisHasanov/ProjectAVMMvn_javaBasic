@@ -1,5 +1,6 @@
 package avm.controller;
 
+import avm.products.Client;
 import avm.service.CafeService;
 import avm.service.CinemaService;
 import avm.service.ClothService;
@@ -18,21 +19,24 @@ public class AvmController {
     private final CinemaService cinemaService;
     private final CafeService cafeService;
     private final Scanner scanner;
+    private Client client;
 
     public AvmController(final MarketService marketService,
                          final ClothService clothService,
                          final CinemaService cinemaService,
-                         final CafeService cafeService) {
+                         final CafeService cafeService,
+                         Client client) {
         this.marketService = marketService;
         this.clothService = clothService;
         this.cinemaService = cinemaService;
         this.cafeService = cafeService;
+        this.client = client;
         this.scanner = new Scanner(System.in);
     }
 
     public void run() {
         char cmd;
-        MarketController marketController = new MarketController(marketService, scanner);
+        MarketController marketController = new MarketController(marketService, scanner, client);
         ShopController shopController = new ShopController(clothService, scanner);
         CinemaController cinemaController = new CinemaController(cinemaService, scanner);
         CafeController cafeController = new CafeController(cafeService, scanner);
