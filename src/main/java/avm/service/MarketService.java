@@ -4,6 +4,8 @@ import avm.products.MarketProduct;
 import avm.repository.MarketRepository;
 import avm.products.Client;
 
+import java.sql.SQLException;
+
 /**
  * AIT-TR, Cohort 42.1, Java Basic, Project AVM/Hypermarket
  * @author Mukhlis
@@ -11,7 +13,7 @@ import avm.products.Client;
  */
 public class MarketService extends BaseService<MarketProduct, MarketRepository> {
 
-    public MarketService(Client client, MarketRepository marketRepository) {
+    public MarketService(Client client, MarketRepository marketRepository) throws SQLException {
         super(client, marketRepository);
     }
 
