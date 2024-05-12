@@ -8,25 +8,24 @@ package avm.products;
 
 // In this class we show the methods associated with the cloth products class
 public class ClothProduct extends BaseProduct {
-    private int size;
+    private String size;
     private static int idCounter = 0;
 
-    public ClothProduct(String name, float price, int size, int quantity) {
-        super(name, price, quantity);
+    public ClothProduct(String name, String size, int quantity, float price) {
+        super(name, quantity, price);
         this.size = size;
         this.id = ++idCounter;
     }
 
-    public ClothProduct(ClothProduct product) {
-        super(product.getName(), product.getPrice(), product.getQuantity());
+    public ClothProduct(ClothProduct clothProduct) {
+        super(clothProduct.getName(), clothProduct.getSize(), clothProduct.getPrice(), clothProduct.getQuantity());
     }
 
-    public int getSize() {
+    public ClothProduct(int id, String name, String size, int quantity, float price) {
+        super(name, quantity, price);
+    }
+    public String getSize() {
         return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
     }
 
     @Override
