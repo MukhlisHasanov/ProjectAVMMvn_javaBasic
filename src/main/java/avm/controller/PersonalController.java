@@ -15,6 +15,7 @@ public class PersonalController {
     private Personal personal;
     private Scanner scanner;
     private PersonalRepository personalRepository;
+    private PersonalState department;
 
     public PersonalController(Scanner scanner, PersonalRepository personalRepository) {
         this.personalRepository = personalRepository;
@@ -47,11 +48,30 @@ public class PersonalController {
         } while (true);
     }
 
-    private Personal registerNewPersonal() {
-        PersonalState department = null;
+    public Personal registerNewPersonal() {
         System.out.print("Enter name: ");
         String name = scanner.nextLine();
 
+        department = departmentState();
+        Personal personal = new Personal(name, department);
+        personalRepository.save(personal);
+        System.out.println("Congratulations you are registered! Your id: " + personal.getId());
+        System.out.println("\nHello, " + personal.getName() + "!\n");
+        return personal;
+    }
+
+    public void updatePersonal(int id) {
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine();
+
+        department = departmentState();
+        Personal personal = new Personal(id, name, department);
+        personalRepository.save(personal);
+        System.out.println("Congratulations you are registered! Your id: " + personal.getId());
+        System.out.println("\nHello, " + personal.getName() + "!\n");
+    }
+
+    private PersonalState departmentState() {
         System.out.print("Enter department[A]DMIN, [M]ARKET, [C]AFE, C[L]OTH, MO[V]IE]: ");
         String choice = scanner.nextLine().toLowerCase();
         switch (choice) {
@@ -71,10 +91,6 @@ public class PersonalController {
                 department = PersonalState.MOVIE;
                 break;
         }
-        Personal personal = new Personal(name, department);
-        personalRepository.save(personal);
-        System.out.println("Congratulations you are registered! Your id: " + personal.getId());
-        System.out.println("\nHello, " + personal.getName() + "!\n");
-        return personal;
+        return department;
     }
 }
