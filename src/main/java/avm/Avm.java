@@ -31,7 +31,7 @@ public class Avm {
         ClientRepository clientRepository = new ClientRepository(SQLITE_DB_AVM);
         PersonalRepository personalRepository = new PersonalRepository(SQLITE_DB_AVM);
         ClientController clientController = new ClientController(clientRepository);
-        PersonalController personalController = new PersonalController(scanner,personalRepository);
+//        PersonalController personalController = new PersonalController(scanner,personalRepository);
 //        clientRepository.initClient();
 //        Client client = clientController.start();
 
@@ -46,12 +46,13 @@ public class Avm {
             choice = scanner.nextLine().toLowerCase();
             switch (choice) {
                 case "p":
-                    personal = personalController.start();
-                    new ServiceController(scanner, personal,
+//                    personal = personalController.start();
+                    new ServiceController(scanner,
                             marketRepository,
                             cafeRepository,
                             clothRepository,
-                            movieRepository).run();
+                            movieRepository,
+                            personalRepository).run();
                     break;
                 case "c":
                     client = clientController.start();

@@ -42,6 +42,13 @@ public class Personal {
         return department;
     }
 
+    @Override
+    public String toString() {
+        return  "[" + name +
+                ", id: " + id +
+                ", department: " + department +"]";
+    }
+
     public void update(String name, PersonalState department) {
         this.name = name;
         this.department = department;
