@@ -46,7 +46,7 @@ public class AvmController {
                     "[c] --> Cafe\n" +
                     "[s] --> Cloth Shop\n" +
                     "[i] --> Cinema\n" +
-                    "[x] --> Exit");
+                    "[b] --> Back AVM menu");
             cmd = scanner.nextLine().charAt(0);
             switch (cmd) {
                 case 'h':
@@ -65,13 +65,11 @@ public class AvmController {
                     System.out.println("Welcome to AVM Cinema!");
                     cinemaController.run();
                     break;
-                case 'x':
-                    System.out.println("Goodbye!");
+                case 'b':
                     break;
                 default:
-                    System.out.println("Unrecognized command");
+                    System.out.println("Unrecognized command: " + cmd);
             }
-        } while (cmd != 'x');
-        System.out.println("Exit from AVM");
+        } while (cmd != 'b');
     }
 }

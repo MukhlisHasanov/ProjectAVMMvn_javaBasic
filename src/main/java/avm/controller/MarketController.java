@@ -8,7 +8,7 @@ import java.util.Scanner;
 /**
  * AIT-TR, Cohort 42.1, Java Basic, Project AVM/Hypermarket
  * @author Mukhlis
- * @version Apr-2024
+ * @version May-2024
  */
 public class MarketController {
     private MarketService service;
@@ -34,7 +34,7 @@ public class MarketController {
                     "[p] --> show shopping cart\n" +
                     "[m] --> pay the bill\n" +
                     "[w] --> show wallet\n" +
-                    "[b] --> back to main menu");
+                    "[b] --> back to places menu");
             cmd = scanner.nextLine().charAt(0);
             switch (cmd) {
                 case 'l':

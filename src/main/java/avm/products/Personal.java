@@ -6,7 +6,6 @@ package avm.products;
  * @version May-2024
  */
 public class Personal {
-    //PersonalState state;
     Integer id;
     String name;
     PersonalState department;
@@ -42,15 +41,15 @@ public class Personal {
         return department;
     }
 
-    @Override
-    public String toString() {
-        return  "[" + name +
-                ", id: " + id +
-                ", department: " + department +"]";
-    }
-
     public void update(String name, PersonalState department) {
         this.name = name;
         this.department = department;
+    }
+
+    @Override
+    public String toString() {
+        return  "[id: " + id +
+                ", " + name +
+                ", department: " + department +"]";
     }
 }

@@ -48,7 +48,7 @@ public class ServiceController {
                             "[3] --> Cloth service\n" +
                             "[4] --> Movie service\n" +
                             "[5] --> Personal service\n" +
-                            "[b] --> back");
+                            "[b] --> Back to AVM menu");
                     cmd = scanner.nextLine().charAt(0);
                     switch (cmd) {
                         case '1':

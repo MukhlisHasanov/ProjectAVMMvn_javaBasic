@@ -1,9 +1,6 @@
 package avm;
 
-import avm.controller.AvmController;
-import avm.controller.ClientController;
-import avm.controller.PersonalController;
-import avm.controller.ServiceController;
+import avm.controller.*;
 import avm.products.Client;
 import avm.products.Personal;
 import avm.repository.*;
@@ -22,6 +19,7 @@ import java.util.Scanner;
  */
 public class Avm {
     public static void main(String[] args) throws SQLException {
+
         String choice;
         Scanner scanner = new Scanner(System.in);
         final String SQLITE_DB_AVM = "jdbc:sqlite:C:/temp/AvmDB.db";
@@ -31,9 +29,6 @@ public class Avm {
         ClientRepository clientRepository = new ClientRepository(SQLITE_DB_AVM);
         PersonalRepository personalRepository = new PersonalRepository(SQLITE_DB_AVM);
         ClientController clientController = new ClientController(clientRepository);
-//        PersonalController personalController = new PersonalController(scanner,personalRepository);
-//        clientRepository.initClient();
-//        Client client = clientController.start();
 
         MarketRepository marketRepository = new MarketRepository(SQLITE_DB_AVM);
         ClothRepository clothRepository = new ClothRepository(SQLITE_DB_AVM);
@@ -46,7 +41,6 @@ public class Avm {
             choice = scanner.nextLine().toLowerCase();
             switch (choice) {
                 case "p":
-//                    personal = personalController.start();
                     new ServiceController(scanner,
                             marketRepository,
                             cafeRepository,
@@ -69,21 +63,7 @@ public class Avm {
                 default:
                     System.out.println("Unrecognized command. Try one more time");
             }
-        } while (choice.equals("x"));
+        } while (!choice.equals("x"));
+        System.out.println("Exit from AVM");
     }
 }
-
-//
-//        MarketService marketService = new MarketService(client,marketRepository);
-//        ClothService clothService = new ClothService(client, clothRepository);
-//        CinemaService cinemaService = new CinemaService(client, movieRepository);
-//        CafeService cafeService = new CafeService(client,cafeRepository);
-//
-////        marketRepository.initMarket();
-////        clothRepository.initCloth();
-////        movieRepository.initMovie();
-////        cafeRepository.initCafe();
-//
-//        new AvmController(marketService, clothService, cinemaService,cafeService, client).run();
-//    }
-//}

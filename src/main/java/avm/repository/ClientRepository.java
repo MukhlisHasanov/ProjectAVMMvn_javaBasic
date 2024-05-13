@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * AIT-TR, cohort 42.1, Java Basic, Project AVM/General
  * @author Andrey Hein
- * @version Apr-2024
+ * @version May-2024
  */
 public class ClientRepository {
     private String dbName;
@@ -86,18 +86,6 @@ public class ClientRepository {
         }
     }
 
-//    public void initClient() {
-//        List<Client> clients = new ArrayList<>(List.of(
-//                new Client("Alexander", 56, 1000),
-//                new Client("Andrey", 50, 1000),
-//                new Client("Valerian", 38, 1000),
-//                new Client("Mukhlis", 29, 1000),
-//                new Client("Rodion", 24, 1000),
-//                new Client("Sergey", 45, 1000)
-//        ));
-//        clients.forEach(client -> save(client));
-//    }
-
     public Collection<Client> findAll() {
         Collection<Client> clients = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(dbName);
@@ -116,38 +104,3 @@ public class ClientRepository {
         return clients;
     }
 }
-
-//    public void put(Client client) {
-//        clientMap.put(client.getId(),client);
-//    }
-//
-//    public Client get(int id) {
-//        return clientMap.get(id);
-//    }
-//
-//    public void remove(int id) {
-//        clientMap.remove(id);
-//    }
-//
-//    public void initClient() {
-//        List<Client> clients = new ArrayList<>(List.of(
-//                new Client("Alexander", 56, 1000),
-//                new Client("Andrey", 50, 1000),
-//                new Client("Valerian", 38, 1000),
-//                new Client("Mukhlis", 29, 1000),
-//                new Client("Rodion", 24, 1000),
-//                new Client("Sergey", 45, 1000)
-//        ));
-//        clients.forEach(client -> put(client));
-//    }
-//
-//    @Override
-//    public String toString() {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("\nClient list: \n");
-//        clientMap.forEach((Integer, client) -> {
-//            sb.append(client).append("\n");
-//        });
-//        return sb.toString();
-//    }
-//}

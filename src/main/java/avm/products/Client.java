@@ -10,10 +10,8 @@ public class Client {
     Integer id;
     int age;
     String name;
-//    private static int idCounter = 0;
 
     public Client(String name, int age, float wallet) {
-//        this.id = ++idCounter;
         this.name = name;
         this.age = age;
         this.wallet = wallet;
@@ -65,8 +63,8 @@ public class Client {
 
     @Override
     public String toString() {
-        return  "[" + name +
-                ", id: " + id +
+        return  "[id: " + id +
+                ", " + name +
                 ", age: " + age +
                 ", wallet: " + wallet +"]";
     }

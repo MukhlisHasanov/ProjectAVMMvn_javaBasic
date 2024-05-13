@@ -1,7 +1,6 @@
 package avm.controller;
 
 import avm.products.Client;
-import avm.products.Wallet;
 import avm.repository.ClientRepository;
 
 import java.util.Scanner;
