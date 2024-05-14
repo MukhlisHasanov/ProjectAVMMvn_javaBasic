@@ -18,7 +18,6 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
     protected Map<Integer, T> productList;
     private Client client;
 
-
     public BaseService(Client client, R repository) throws SQLException {
         this.repository = repository;
         this.client = client;

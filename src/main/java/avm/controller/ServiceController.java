@@ -15,10 +15,10 @@ public class ServiceController {
     private PersonalRepository personalRepository;
 
     public ServiceController(Scanner scanner, MarketRepository marketRepository,
-                                              CafeRepository cafeRepository,
-                                              ClothRepository clothRepository,
-                                              MovieRepository movieRepository,
-                                              PersonalRepository personalRepository) {
+                             CafeRepository cafeRepository,
+                             ClothRepository clothRepository,
+                             MovieRepository movieRepository,
+                             PersonalRepository personalRepository) {
         this.scanner = scanner;
         this.marketRepository = marketRepository;
         this.cafeRepository = cafeRepository;
@@ -48,7 +48,7 @@ public class ServiceController {
                             "[3] --> Cloth service\n" +
                             "[4] --> Movie service\n" +
                             "[5] --> Personal service\n" +
-                            "[b] --> back");
+                            "[b] --> Back to AVM menu");
                     cmd = scanner.nextLine().charAt(0);
                     switch (cmd) {
                         case '1':
