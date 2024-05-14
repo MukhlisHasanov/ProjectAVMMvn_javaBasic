@@ -1,5 +1,6 @@
 package avm.controller;
 
+import avm.products.Client;
 import avm.service.ClothService;
 
 import java.util.Scanner;
@@ -12,10 +13,12 @@ import java.util.Scanner;
 public class ShopController {
     public ClothService service;
     public Scanner scanner;
+    private Client client;
 
     public ShopController(ClothService service, Scanner scanner) {
         this.service = service;
         this.scanner = scanner;
+        this.client = client;
     }
 
     public void run() {
@@ -30,7 +33,11 @@ public class ShopController {
                     "[a] --> add cloth to shopping cart\n" +
                     "[r] --> remove cloth from shopping cart\n" +
                     "[p] --> show shopping cart\n" +
-                    "[b] --> back to main menu");
+                    "[b] --> back to main menu\n" +
+                    "[m] --> pay the bill\n" +
+                    "[w] --> show wallet\n" +
+                    "[b] --> back to places menu");
+
             cdm = scanner.nextLine().charAt(0);
             switch (cdm) {
                 case 'l':
@@ -70,6 +77,24 @@ public class ShopController {
                 case 'p':
                     System.out.println(service);
                     System.out.println("Amount to be paid: " + service.sumOrder() + " EUR" + "\n");
+                    break;
+                case'm':
+                    System.out.println(service);
+                    System.out.println("Amount to be paid: " + service.sumOrder() + " EUR" + "\n");
+                    System.out.println("Do you want to pay the bill? [y]es/[n]o" );
+                    String choice = scanner.nextLine().toLowerCase();
+                    if (choice.equals("y")) {
+                        Float answer = service.payTheBill();
+                        System.out.println(answer);
+                        System.out.println("\nMoney in the wallet: "+ client.getWallet() + " EUR");
+                    } else if (choice.equals("n")) {
+                        // TODO rewrite code
+                    } else {
+                        System.out.println("INCORRECT CHOICE! PLEASE ENTER Y/N");
+                    }
+                    break;
+                case 'w':
+                    System.out.println("\nMoney in the wallet: "+ client.getWallet() + " EUR");
                     break;
                 case 'b':
                     break;

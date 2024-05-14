@@ -14,11 +14,11 @@ public class MovieRepository implements ProductRepository<MovieProduct>{
     //  private Map<Integer, MovieProduct> movieMap;
 
     public String AvmDB;
-    private final String SQL_INSERT = "INSERT INTO market (name, quantity, price) VALUES (?, ?, ?)";
-    private final String SQL_UPDATE = "UPDATE market SET name = ?, quantity = ?, price = ? WHERE id = ?";
-    private final String SQL_FIND_BY_ID = "SELECT * FROM market WHERE id = ?";
-    private final String SQL_FIND_ALL = "SELECT * FROM market";
-    private final String SQL_DELETE_BY_ID = "DELETE FROM market WHERE id = ?";
+    private final String SQL_INSERT = "INSERT INTO movie (name, genre, price, quantity) VALUES (?, ?, ?, ?)";
+    private final String SQL_UPDATE = "UPDATE movie SET name = ?, genre = ?, price = ?, quantity = ? WHERE id = ?";
+    private final String SQL_FIND_BY_ID = "SELECT * FROM movie WHERE id = ?";
+    private final String SQL_FIND_ALL = "SELECT * FROM movie";
+    private final String SQL_DELETE_BY_ID = "DELETE FROM movie WHERE id = ?";
 
 //    public MovieRepository() {
 //   //     movieMap = new HashMap<>();
@@ -68,11 +68,11 @@ public class MovieRepository implements ProductRepository<MovieProduct>{
                 }
             } else {
                 try (PreparedStatement ps = connection.prepareStatement(SQL_UPDATE)) {
-                    ps.setInt(1, movieProduct.getId());
-                    ps.setString(2, movieProduct.getName());
-                    ps.setString(3, movieProduct.getGenre());
-                    ps.setFloat(4, movieProduct.getPrice());
-                    ps.setInt(5, movieProduct.getQuantity());
+                    ps.setString(1, movieProduct.getName());
+                    ps.setString(2, movieProduct.getGenre());
+                    ps.setFloat(3, movieProduct.getPrice());
+                    ps.setInt(4, movieProduct.getQuantity());
+                    ps.setInt(5, movieProduct.getId());
                     ps.executeUpdate();
                 }
             }
@@ -102,7 +102,7 @@ public class MovieRepository implements ProductRepository<MovieProduct>{
     }
 
     @Override
-    public void remove(int id) {
+    public void delete(int id) {
         try (Connection connection = DriverManager.getConnection(AvmDB);
              PreparedStatement ps = connection.prepareStatement(SQL_DELETE_BY_ID)) {
             ps.setInt(1, id);

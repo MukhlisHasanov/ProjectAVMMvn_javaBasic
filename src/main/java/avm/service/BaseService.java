@@ -32,13 +32,11 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
                 if (productList.containsKey(id)) {
                     T existingProduct = productList.get(id);
                     existingProduct.setQuantity(existingProduct.getQuantity() + quantity);
-                    //System.out.println("You added: " + quantity + " pcs of " + product.getName() + " to shopping cart");
                 } else {
                     T newProduct = createProduct(product);
                     newProduct.setQuantity(quantity);
                     newProduct.setId(id);
                     productList.put(id, newProduct);
-                    //System.out.println("You added: " + quantity + " pcs of " + product.getName() + " to shopping cart");
                 }
                 product.setQuantity(product.getQuantity() - quantity);
 

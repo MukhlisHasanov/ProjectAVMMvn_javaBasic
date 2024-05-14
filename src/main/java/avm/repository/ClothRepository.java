@@ -14,6 +14,13 @@ public class ClothRepository implements ProductRepository<ClothProduct> {
 //    private Map<Integer, ClothProduct> clothMap;
 
     private String AvmDB;
+    private final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS cloth (" +
+            " id          INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+            " name        TEXT NOT NULL," +
+            " size        TEXT NOT NULL," +
+            " quantity    INTEGER NOT NULL)" +
+            " price       FLOAT NOT NULL";
+    private final String SQL_DELETE_TABLE = "DELETE FROM cloth";
     private final String SQL_INSERT = "INSERT INTO cloth (name, size, quantity, price) VALUES (?, ?, ?, ?)";
     private final String SQL_UPDATE = "UPDATE cloth SET name = ?, size = ?, quantity = ?, price = ? WHERE id = ?";
     private final String SQL_FIND_BY_ID = "SELECT * FROM cloth WHERE id = ?";
@@ -36,6 +43,7 @@ public class ClothRepository implements ProductRepository<ClothProduct> {
             ResultSet rs = stmt.executeQuery(SQL_FIND_ALL);
             while (rs.next()) {
                 clothes.add(new ClothProduct(
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("size"),
                         rs.getInt("quantity"),
@@ -117,6 +125,17 @@ public class ClothRepository implements ProductRepository<ClothProduct> {
                 new ClothProduct("Hilfiger", "XXL", 20, 9)
         ));
         clothProducts.forEach(clothProduct -> save(clothProduct));
+    }
+
+    public void deleteAll() {
+        try (Connection connection = DriverManager.getConnection(AvmDB);
+             Statement stmt = connection.createStatement()) {
+//            stmt.executeUpdate(SQL_CREATE_TABLE);
+            stmt.executeUpdate(SQL_DELETE_TABLE);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
 

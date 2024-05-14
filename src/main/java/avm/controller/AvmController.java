@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 /**
  * AIT-TR, Cohort 42.1, Java Basic, Project AVM/Hypermarket
- * @author Valerian
- * @version Mai-2024
+ * @author Mukhlis
+ * @version Apr-2024
  */
 public class AvmController {
     private final MarketService marketService;
