@@ -14,6 +14,7 @@ public class PersonalRepository {
             " id          INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
             " name        TEXT NOT NULL," +
             " department  TEXT NOT NULL)";
+    private final String SQL_DELETE_TABLE = "DELETE FROM personal";
     private final String SQL_INSERT = "INSERT INTO personal (name, department) VALUES (?, ?)";
     private final String SQL_UPDATE = "UPDATE personal SET name = ?, department = ? WHERE id = ?";
     private final String SQL_FIND_BY_ID = "SELECT * FROM personal WHERE id = ?";
@@ -72,6 +73,16 @@ public class PersonalRepository {
              PreparedStatement ps = connection.prepareStatement(SQL_DELETE_BY_ID)) {
             ps.setInt(1, id);
             ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteAll() {
+        try (Connection connection = DriverManager.getConnection(dbName);
+             Statement stmt = connection.createStatement()) {
+            stmt.executeUpdate(SQL_CREATE_TABLE);
+            stmt.executeUpdate(SQL_DELETE_TABLE);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
