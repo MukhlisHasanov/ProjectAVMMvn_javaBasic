@@ -1,10 +1,8 @@
 package avm;
 
-import avm.products.Client;
 import avm.products.MarketProduct;
 import avm.repository.MarketRepository;
-import avm.repository.ProductRepository;
-import avm.service.MarketService;
+
 import org.junit.jupiter.api.*;
 
 public class MarketRepositoryTest {
