@@ -96,7 +96,7 @@ public class CafeRepository implements ProductRepository<CafeProduct> {
     }
 
     @Override
-    public void delete(int id) {
+    public boolean delete(int id) {
         try (Connection connection = DriverManager.getConnection(AvmDB);
              PreparedStatement ps = connection.prepareStatement(SQL_DELETE_BY_ID)) {
             ps.setInt(1, id);
@@ -104,6 +104,7 @@ public class CafeRepository implements ProductRepository<CafeProduct> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return false;
     }
 
     public void initCafe() {
