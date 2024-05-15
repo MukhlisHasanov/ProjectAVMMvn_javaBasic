@@ -9,7 +9,7 @@ import java.sql.SQLException;
 /**
  * AIT-TR, cohort 42.1, Java Basic, Project AVM/Cafe
  * @author Alexander Germanow
- * @version Apr-2024
+ * @version May-2024
  */
 public class CafeService extends BaseService<CafeProduct, CafeRepository> {
 

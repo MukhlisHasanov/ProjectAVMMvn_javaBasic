@@ -37,7 +37,7 @@ public class AvmController {
     public void run() {
         char cmd;
         MarketController marketController = new MarketController(marketService, scanner, client);
-        ShopController shopController = new ShopController(clothService, scanner);
+        ShopController shopController = new ShopController(clothService, scanner, client);
         CinemaController cinemaController = new CinemaController(cinemaService, scanner);
         CafeController cafeController = new CafeController(cafeService, scanner);
         do {

@@ -9,7 +9,7 @@ import java.sql.SQLException;
 /**
  * AIT-TR, Cohort 42.1, Java Basic, Project AVM/ClothShop
  * @author Valerian
- * @version Apr-2024
+ * @version May-2024
  */
 public class ClothService extends BaseService<ClothProduct, ClothRepository> {
 

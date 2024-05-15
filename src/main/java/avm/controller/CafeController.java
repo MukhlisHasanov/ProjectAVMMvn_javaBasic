@@ -7,7 +7,7 @@ import java.util.Scanner;
 /**
  * AIT-TR, cohort 42.1, Java Basic, Project AVM/Cafe
  * @author Alexander Germanow
- * @version Apr-2024
+ * @version May-2024
  */
 public class CafeController {
     private CafeService service;
