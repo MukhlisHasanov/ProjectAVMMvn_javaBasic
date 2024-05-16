@@ -22,4 +22,14 @@ public class CafeService extends BaseService<CafeProduct, CafeRepository> {
         return new CafeProduct(product);
     }
 
+    @Override
+    protected void minusProductQuantity(int id, int quantity) {
+
+    }
+
+    @Override
+    protected void plusProductQuantity(int id, int quantity) {
+
+    }
+
 }

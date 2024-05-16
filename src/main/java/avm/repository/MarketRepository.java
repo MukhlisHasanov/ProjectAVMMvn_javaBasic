@@ -11,8 +11,14 @@ import java.util.*;
  * @version May-2024
  */
 public class MarketRepository implements ProductRepository<MarketProduct> {
-    //    private Map<Integer, MarketProduct> marketMap;
     private String AvmDB;
+
+    private final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS market (" +
+            " id          INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+            " name        TEXT NOT NULL," +
+            " quantity    INTEGER NOT NULL," +
+            " price       FLOAT NOT NULL)";
+    private final String SQL_DELETE_TABLE = "DELETE FROM personal";
     private final String SQL_INSERT = "INSERT INTO market (name, quantity, price) VALUES (?, ?, ?)";
     private final String SQL_UPDATE = "UPDATE market SET name = ?, quantity = ?, price = ? WHERE id = ?";
     private final String SQL_FIND_BY_ID = "SELECT * FROM market WHERE id = ?";
@@ -23,13 +29,12 @@ public class MarketRepository implements ProductRepository<MarketProduct> {
         this.AvmDB = AvmDB;
     }
 
-//    public MarketRepository() {
-////        marketMap = new HashMap<>();
-//    }
+    public String getAvmDB() {
+        return AvmDB;
+    }
 
     @Override
     public Collection<MarketProduct> findAll() {
-        // return productMap.values();
         Collection<MarketProduct> products = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(AvmDB);
              Statement stmt = connection.createStatement()) {
@@ -106,37 +111,14 @@ public class MarketRepository implements ProductRepository<MarketProduct> {
             throw new RuntimeException(e);
         }
     }
+
+    public void deleteAll() {
+        try (Connection connection = DriverManager.getConnection(AvmDB);
+             Statement stmt = connection.createStatement()) {
+            stmt.executeUpdate(SQL_CREATE_TABLE);
+            stmt.executeUpdate(SQL_DELETE_TABLE);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
-
-//    public void initMarket() {
-//        List<MarketProduct> marketProducts = new ArrayList<>(List.of(
-//                new MarketProduct("Bublik", 1.98f, 100),
-//                new MarketProduct("Beef", 6.50f, 15),
-//                new MarketProduct("Coca-Cola", 0.5f, 120),
-//                new MarketProduct("Salmon", 15.5f, 30),
-//                new MarketProduct("Chicken", 8.5f, 40),
-//                new MarketProduct("Turkey", 9, 18),
-//                new MarketProduct("Milk", 1, 100),
-//                new MarketProduct("Yoghurt", 1.2f, 30),
-//                new MarketProduct("Butter", 2.2f, 15),
-//                new MarketProduct("Cheese", 7.5f, 22),
-//                new MarketProduct("Salt", 0.5f, 25),
-//                new MarketProduct("Sugar", 1.25f, 250),
-//                new MarketProduct("Flour", 0.60f, 200),
-//                new MarketProduct("Olive", 12, 30),
-//                new MarketProduct("Soap", 1.3f, 70),
-//                new MarketProduct("Shampoo", 2.4f, 30)
-//        ));
-//        marketProducts.forEach(marketProduct -> save(marketProduct));
-//    }
-//}
-
-//    @Override
-//    public String toString() {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("\nHypermarket product list:\n");
-//        marketMap.forEach((Integer, marketProduct) -> {
-//            sb.append(marketProduct).append("\n");
-//        });
-//        return sb.toString();
-//    }

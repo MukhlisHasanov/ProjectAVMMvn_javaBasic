@@ -39,7 +39,7 @@ public class ClothServiceMenu {
                         String name = input[0].trim();
                         String size = input[1].trim();
                         int quantity = Integer.valueOf(input[2].trim());
-                        float price = Float.valueOf(input[2].trim());
+                        float price = Float.valueOf(input[3].trim());
                         clothRepository.save(new ClothProduct(name, size, quantity, price));
                         System.out.println("Product added!");
                     } else {
@@ -62,7 +62,7 @@ public class ClothServiceMenu {
                             String name = input[0].trim();
                             String size = input[1].trim();
                             int quantity = Integer.valueOf(input[2].trim());
-                            float price = Float.valueOf(input[2].trim());
+                            float price = Float.valueOf(input[3].trim());
                             clothRepository.save(new ClothProduct(id, name, size, quantity, price));
                             System.out.println("Product updated!");
                         } else {

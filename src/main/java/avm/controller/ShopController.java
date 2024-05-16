@@ -8,14 +8,14 @@ import java.util.Scanner;
 /**
  * AIT-TR, Cohort 42.1, Java Basic, Project AVM/ClothShop
  * @author Valerian
- * @version Apr-2024
+ * @version May-2024
  */
 public class ShopController {
     public ClothService service;
     public Scanner scanner;
     private Client client;
 
-    public ShopController(ClothService service, Scanner scanner) {
+    public ShopController(ClothService service, Scanner scanner, Client client) {
         this.service = service;
         this.scanner = scanner;
         this.client = client;

@@ -21,4 +21,14 @@ public class CinemaService extends BaseService<MovieProduct, MovieRepository> {
     protected MovieProduct createProduct(MovieProduct product) {
         return new MovieProduct(product);
     }
+
+    @Override
+    protected void minusProductQuantity(int id, int quantity) {
+
+    }
+
+    @Override
+    protected void plusProductQuantity(int id, int quantity) {
+
+    }
 }

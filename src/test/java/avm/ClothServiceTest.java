@@ -49,6 +49,8 @@ public class ClothServiceTest {
         Collection<ClothProduct> cloths = clothRepository.findAll();
         Assertions.assertEquals(1, cloths.size());
         clothRepository.delete(1);
+        Assertions.assertEquals(0, cloths.size());
     }
+
 }
 
