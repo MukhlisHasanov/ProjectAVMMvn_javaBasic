@@ -11,18 +11,13 @@ import java.util.*;
  * @version Apr-2024
  */
 public class CafeRepository implements ProductRepository<CafeProduct> {
-//    private Map<Integer, CafeProduct> cafeMap;
+    private String AvmDB;
 
-    public String AvmDB;
     private final String SQL_INSERT = "INSERT INTO cafe (name, quantity, price) VALUES (?, ?, ?)";
     private final String SQL_UPDATE = "UPDATE cafe SET name = ?, quantity = ?, price = ? WHERE id = ?";
     private final String SQL_FIND_BY_ID = "SELECT * FROM cafe WHERE id = ?";
     private final String SQL_FIND_ALL = "SELECT * FROM cafe";
     private final String SQL_DELETE_BY_ID = "DELETE FROM cafe WHERE id = ?";
-
-//    public CafeRepository() {
-//        cafeMap = new HashMap<>();
-//    }
 
     public CafeRepository(String AvmDB) {
         this.AvmDB = AvmDB;
@@ -30,12 +25,12 @@ public class CafeRepository implements ProductRepository<CafeProduct> {
 
     @Override
     public Collection<CafeProduct> findAll() {
-        Collection<CafeProduct> menues = new ArrayList<>();
+        Collection<CafeProduct> products = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(AvmDB);
              Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(SQL_FIND_ALL);
             while (rs.next()) {
-                menues.add(new CafeProduct(
+                products.add(new CafeProduct(
                         rs.getString("name"),
                         rs.getInt("quantity"),
                         rs.getFloat("price")));
@@ -43,7 +38,7 @@ public class CafeRepository implements ProductRepository<CafeProduct> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return menues;
+        return products;
     }
 
     @Override
@@ -123,13 +118,3 @@ public class CafeRepository implements ProductRepository<CafeProduct> {
         cafeProducts.forEach(cafeProduct -> save(cafeProduct));
     }
 }
-//    @Override
-//    public String toString() {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("\nCafe menu:\n");
-//        cafeMap.forEach((Integer, cafeProduct) -> {
-//            sb.append(cafeProduct).append("\n");
-//        });
-//        return sb.toString();
-//    }
-//}

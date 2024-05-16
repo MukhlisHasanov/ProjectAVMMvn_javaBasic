@@ -29,10 +29,6 @@ public class MarketRepository implements ProductRepository<MarketProduct> {
         this.AvmDB = AvmDB;
     }
 
-    public String getAvmDB() {
-        return AvmDB;
-    }
-
     @Override
     public Collection<MarketProduct> findAll() {
         Collection<MarketProduct> products = new ArrayList<>();
