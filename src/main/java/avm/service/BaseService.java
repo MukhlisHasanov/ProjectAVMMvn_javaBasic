@@ -38,14 +38,7 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
                     productList.put(id, newProduct);
                 }
                 product.setQuantity(product.getQuantity() - quantity);
-
-                try (PreparedStatement psu = connection.prepareStatement("UPDATE market SET quantity = ? WHERE id = ?")) {
-                    psu.setInt(1, product.getQuantity());
-                    psu.setInt(2, id);
-                    psu.executeUpdate();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                minusProductQuantity(id, quantity);
                 return ("You added: " + quantity + " pcs of " + product.getName() + " to shopping cart");
             }
             return ("Not enough pcs, available only " + product.getQuantity() + " pcs");
@@ -60,14 +53,7 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
             productList.remove(id);
             T repositoryProduct = repository.findById(id);
             repositoryProduct.setQuantity(repositoryProduct.getQuantity() + currentQuantity);
-
-            try (PreparedStatement psu = connection.prepareStatement("UPDATE market SET quantity = quantity + ? WHERE id = ?")) {
-                psu.setInt(1, product.getQuantity());
-                psu.setInt(2, id);
-                psu.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            plusProductQuantity(id, currentQuantity);
             return ("You removed: " + currentQuantity + " pcs of " + product.getName() + " from shopping cart");
         }
         return ("Incorrect ID entry");
@@ -85,13 +71,7 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
                 product.setQuantity(newQuantity);
             }
 
-            try (PreparedStatement psu = connection.prepareStatement("UPDATE market SET quantity = quantity + ? WHERE id = ?")) {
-                psu.setInt(1, quantityToRemove);
-                psu.setInt(2, id);
-                psu.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            plusProductQuantity(id, quantityToRemove);
             repositoryProduct.setQuantity(repositoryProduct.getQuantity() + quantityToRemove);
 
             return ("You removed: " + quantityToRemove + " pcs of " + product.getName() + " from shopping cart");
@@ -118,6 +98,9 @@ public abstract class BaseService <T extends BaseProduct, R extends ProductRepos
     }
 
     protected abstract T createProduct(T product);
+
+    protected abstract void minusProductQuantity(int id, int quantity);
+    protected abstract void plusProductQuantity(int id, int quantity);
 
     @Override
     public String toString() {

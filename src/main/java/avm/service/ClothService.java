@@ -21,4 +21,14 @@ public class ClothService extends BaseService<ClothProduct, ClothRepository> {
     protected ClothProduct createProduct(ClothProduct product) {
         return new ClothProduct(product);
     }
+
+    @Override
+    protected void minusProductQuantity(int id, int quantity) {
+
+    }
+
+    @Override
+    protected void plusProductQuantity(int id, int quantity) {
+
+    }
 }
