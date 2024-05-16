@@ -6,6 +6,7 @@ import avm.repository.MarketRepository;
 import org.junit.jupiter.api.*;
 
 public class MarketRepositoryTest {
+    // TODO rework to MarketService
     final static String SQLITE_DB_AVM = "jdbc:sqlite:C:/temp/AvmDB_test.db";
     private static MarketRepository marketRepository;
 

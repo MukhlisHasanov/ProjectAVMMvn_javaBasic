@@ -54,16 +54,19 @@ public class AvmController {
                     marketController.run();
                     break;
                 case 'c':
-                    System.out.println("Welcome to AVM Ice Cafe!");
-                    cafeController.run();
+                    //System.out.println("Welcome to AVM Ice Cafe!");
+                    System.out.println("Closed for renovation\n");
+                    //cafeController.run();
                     break;
                 case 's':
                     System.out.println("Welcome to AVM Cloth Shop!");
                     shopController.run();
+//                    System.out.println("Closed for renovation\n");
                     break;
                 case 'i':
-                    System.out.println("Welcome to AVM Cinema!");
-                    cinemaController.run();
+                    //System.out.println("Welcome to AVM Cinema!");
+                    System.out.println("Closed for renovation\n");
+                    //cinemaController.run();
                     break;
                 case 'b':
                     break;

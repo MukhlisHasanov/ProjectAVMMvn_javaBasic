@@ -51,7 +51,8 @@ public class ShopController {
                         id = Integer.valueOf(input[0].trim());
                         quantity = Integer.valueOf(input[1].trim());
 //                        size = Integer.valueOf(input[2].trim());
-                        service.addToOrder(id, quantity);
+                        String answer = service.addToOrder(id, quantity);
+                        System.out.println(answer);
                     } else {
                         if (Integer.valueOf(input[0].trim())==0) {
                             break;
@@ -65,13 +66,15 @@ public class ShopController {
                     if (input.length > 1) {
                         id = Integer.valueOf(input[0].trim());
                         quantity = Integer.valueOf(input[1].trim());
-                        service.removeFromOrder(id, quantity);
+                        String answer = service.removeFromOrder(id, quantity);
+                        System.out.println(answer);
                     } else {
                         if (Integer.valueOf(input[0].trim())==0) {
                             break;
                         }
                         id = Integer.valueOf(input[0].trim());
-                        service.removeFromOrder(id);
+                        String answer = service.removeFromOrder(id);
+                        System.out.println(answer);
                     }
                     break;
                 case 'p':
