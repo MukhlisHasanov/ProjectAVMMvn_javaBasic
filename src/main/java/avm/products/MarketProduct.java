@@ -3,7 +3,7 @@ package avm.products;
 /**
  * AIT-TR, Cohort 42.1, Java Basic, Project AVM/Hypermarket
  * @author Mukhlis/Andrey
- * @version Apr-2024
+ * @version May-2024
  */
 
 // In this class we show the methods associated with the market products class

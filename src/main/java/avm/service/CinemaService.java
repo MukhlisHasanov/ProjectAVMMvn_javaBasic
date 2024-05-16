@@ -9,7 +9,7 @@ import java.sql.SQLException;
 /**
  * AIT-TR, Cohort 42.1, Java Basic, Project AVM/Cinema
  * @author Rodion
- * @version Apr-2024
+ * @version May-2024
  */
 public class CinemaService extends BaseService<MovieProduct, MovieRepository> {
 
@@ -20,5 +20,15 @@ public class CinemaService extends BaseService<MovieProduct, MovieRepository> {
     @Override
     protected MovieProduct createProduct(MovieProduct product) {
         return new MovieProduct(product);
+    }
+
+    @Override
+    protected void minusProductQuantity(int id, int quantity) {
+
+    }
+
+    @Override
+    protected void plusProductQuantity(int id, int quantity) {
+
     }
 }

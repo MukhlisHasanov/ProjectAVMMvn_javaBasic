@@ -8,7 +8,7 @@ import java.util.Scanner;
 /**
  * AIT-TR, cohort 42.1, Java Basic, Project AVM/General
  * @author Mukhlis/Andrey Hein
- * @version Apr-2024
+ * @version May-2024
  */
 public class ClientController {
     private Client client;

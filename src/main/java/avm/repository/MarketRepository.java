@@ -11,8 +11,14 @@ import java.util.*;
  * @version May-2024
  */
 public class MarketRepository implements ProductRepository<MarketProduct> {
-    //    private Map<Integer, MarketProduct> marketMap;
     private String AvmDB;
+
+    private final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS market (" +
+            " id          INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+            " name        TEXT NOT NULL," +
+            " quantity    INTEGER NOT NULL," +
+            " price       FLOAT NOT NULL)";
+    private final String SQL_DELETE_TABLE = "DELETE FROM personal";
     private final String SQL_INSERT = "INSERT INTO market (name, quantity, price) VALUES (?, ?, ?)";
     private final String SQL_UPDATE = "UPDATE market SET name = ?, quantity = ?, price = ? WHERE id = ?";
     private final String SQL_FIND_BY_ID = "SELECT * FROM market WHERE id = ?";
@@ -91,12 +97,23 @@ public class MarketRepository implements ProductRepository<MarketProduct> {
     }
 
     @Override
-    public void delete(int id) {
+    public boolean delete(int id) {
         // productMap.delete(id)
         try (Connection connection = DriverManager.getConnection(AvmDB);
              PreparedStatement ps = connection.prepareStatement(SQL_DELETE_BY_ID)) {
             ps.setInt(1, id);
             ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+
+    public void deleteAll() {
+        try (Connection connection = DriverManager.getConnection(AvmDB);
+             Statement stmt = connection.createStatement()) {
+            stmt.executeUpdate(SQL_CREATE_TABLE);
+            stmt.executeUpdate(SQL_DELETE_TABLE);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

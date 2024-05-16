@@ -3,7 +3,7 @@ package avm.products;
 /**
  * AIT-TR, cohort 42.1, Java Basic, Project AVM/General
  * @author Andrey Hein
- * @version Apr-2024
+ * @version May-2024
  */
 public class Client {
     float wallet;
