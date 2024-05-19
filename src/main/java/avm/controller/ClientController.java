@@ -1,7 +1,6 @@
 package avm.controller;
 
 import avm.products.Client;
-import avm.products.Wallet;
 import avm.repository.ClientRepository;
 
 import java.util.Scanner;
@@ -9,7 +8,7 @@ import java.util.Scanner;
 /**
  * AIT-TR, cohort 42.1, Java Basic, Project AVM/General
  * @author Mukhlis/Andrey Hein
- * @version Apr-2024
+ * @version May-2024
  */
 public class ClientController {
     private Client client;
@@ -21,29 +20,29 @@ public class ClientController {
     }
 
     public Client start() {
-        System.out.println("Welcome to AVM!");
-        System.out.print("Do you have client account? [y]es, [n]o:");
-        String choice = scanner.nextLine().toLowerCase();
-        if (choice.equals("y")) {
-            System.out.print("Enter account ID: ");
-            int clientId = scanner.nextInt();
-            scanner.nextLine();
+        do {
+            System.out.print("Do you have client account? [y]es, [n]o:");
+            String choice = scanner.nextLine().toLowerCase();
+            if (choice.equals("y")) {
+                System.out.print("Enter account ID: ");
+                int clientId = scanner.nextInt();
+                scanner.nextLine();
 
-            this.client = clientRepository.get(clientId);
-            if (client != null) {
-                System.out.println("\nHello, " + client.getName() + "!\n");
-            } else {
-                System.out.println("ID NOT FOUND! Please check ID or sign up");
+                this.client = clientRepository.findById(clientId);
+                if (client != null) {
+                    System.out.println("\nHello, " + client.getName() + "!\n");
+                    return client;
+                } else {
+                    System.out.println("ID NOT FOUND! Please check ID or sign up");
+                    return registerNewClient();
+                }
+            } else if (choice.equals("n")) {
+                System.out.println("Please, sign up");
                 return registerNewClient();
+            } else {
+                System.out.println("Unrecognized command. Try one more time");
             }
-        } else if (choice.equals("n")) {
-            System.out.println("Please, sign up");
-            return registerNewClient();
-        } else {
-            System.out.println("Unrecognized command. Try one more time");
-            start();
-        }
-        return client;
+        } while (true);
     }
 
     private Client registerNewClient() {
@@ -60,7 +59,7 @@ public class ClientController {
 
         Client client = new Client(name, age, wallet);
 
-        clientRepository.put(client);
+        clientRepository.save(client);
         System.out.println("Congratulations you are registered! Your id: " + client.getId());
         System.out.println("\nHello, " + client.getName() + "!\n");
         return client;

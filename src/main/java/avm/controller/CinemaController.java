@@ -7,7 +7,7 @@ import java.util.Scanner;
 /**
  * AIT-TR, Cohort 42.1, Java Basic, Project AVM/Cinema
  * @author Rodion
- * @version Apr-2024
+ * @version May-2024
  */
 public class CinemaController {
     private CinemaService service;

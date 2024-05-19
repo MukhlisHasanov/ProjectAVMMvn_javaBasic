@@ -3,10 +3,9 @@ package avm.products;
 /**
  * AIT-TR, cohort 42.1, Java Basic, Project AVM/General
  * @author Andrey Hein
- * @version Apr-2024
+ * @version May-2024
  */
 
-// This is base class from future product classes
 public abstract class BaseProduct {
     protected Integer id;
     protected String name;
@@ -19,9 +18,6 @@ public abstract class BaseProduct {
         this.quantity = quantity;
     }
 
-    public BaseProduct(String name, String genre, float price, int quantity) {
-    }
-
     public Integer getId() {
         return id;
     }
@@ -32,6 +28,14 @@ public abstract class BaseProduct {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     public float getPrice() {
