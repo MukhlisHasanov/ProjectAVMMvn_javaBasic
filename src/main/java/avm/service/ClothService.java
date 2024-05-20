@@ -14,9 +14,14 @@ import java.sql.SQLException;
  */
 public class ClothService extends BaseService<ClothProduct, ClothRepository> {
 
-    public ClothService(Client client, ClothRepository clothRepository) throws SQLException {
-        super(client, clothRepository);
+
+    String size;
+
+    public ClothService(Client client, ClothRepository repository, String size) throws SQLException {
+        super(client, repository);
+        this.size = size;
     }
+
     public void minusProductQuantity(int id, int quantity) {
         try (PreparedStatement psu = connection.prepareStatement("UPDATE cloth SET quantity = quantity - ? WHERE id = ?")) {
             psu.setInt(1, quantity);
@@ -36,6 +41,7 @@ public class ClothService extends BaseService<ClothProduct, ClothRepository> {
             throw new RuntimeException(e);
         }
     }
+
 
     @Override
     protected ClothProduct createProduct(ClothProduct product) {

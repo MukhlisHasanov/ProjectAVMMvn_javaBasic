@@ -14,6 +14,7 @@ public class ShopController {
     public ClothService service;
     public Scanner scanner;
     private Client client;
+    private char cdm;
 
     public ShopController(ClothService service, Scanner scanner, Client client) {
         this.service = service;
@@ -22,7 +23,6 @@ public class ShopController {
     }
 
     public void run() {
-        char cdm;
         String[] input;
         int quantity;
         int id;
@@ -50,8 +50,10 @@ public class ShopController {
                     if (input.length > 1) {
                         id = Integer.valueOf(input[0].trim());
                         quantity = Integer.valueOf(input[1].trim());
-//                        size = Integer.valueOf(input[2].trim());
-                        service.addToOrder(id, quantity);
+                        size = Integer.parseInt(String.valueOf(input[2].split(String.valueOf(cdm))));
+                        String answer = service.addToOrder(id, quantity, size);
+
+                        System.out.println(answer);
                     } else {
                         if (Integer.valueOf(input[0].trim())==0) {
                             break;
