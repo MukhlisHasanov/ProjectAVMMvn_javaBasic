@@ -26,7 +26,7 @@ public class ShopController {
         String[] input;
         int quantity;
         int id;
-        int size;
+        String size;
         do {
             System.out.println("\nCloth Shop: Please enter the command:\n" +
                     "[l] --> show clothes list,\n" +
@@ -47,48 +47,49 @@ public class ShopController {
                     System.out.print("Cloth Shop: Please enter values of cloth for adding." +
                             "\n[0] --> back to previous menu\nValues: 'id' & 'quantity' & 'size': ");
                     input = scanner.nextLine().split("&");
-                    if (input.length > 1) {
-                        id = Integer.valueOf(input[0].trim());
-                        quantity = Integer.valueOf(input[1].trim());
-                        size = Integer.parseInt(String.valueOf(input[2].split(String.valueOf(cdm))));
-                        String answer = service.addToOrder(id, quantity, size);
-
-                        System.out.println(answer);
-                    } else {
-                        if (Integer.valueOf(input[0].trim())==0) {
-                            break;
+                    if (input.length == 3) {
+                        id = Integer.parseInt(input[0].trim());
+                        quantity = Integer.parseInt(input[1].trim());
+                        size = input[2].trim();
+                        if (isValidSize(size)) {
+                            String answer = service.addToOrder(id, quantity, size);
+                            System.out.println(answer);
+                        } else {
+                            System.out.println("Invalid size. Please enter a valid size (e.g., S, M, L, XL).");
                         }
+                    } else if (input.length == 1 && Integer.parseInt(input[0].trim()) == 0) {
+                        break;
+                    } else {
+                        System.out.println("Invalid input. Please enter values in the format: 'id' & 'quantity' & 'size'.");
                     }
                     break;
                 case 'r':
-                    System.out.println("Cloth Shop: Please enter values of cloth for adding." +
+                    System.out.println("Cloth Shop: Please enter values of cloth for removing." +
                             "\n[0] --> back to previous menu\nValues: 'id' & 'quantity': ");
                     input = scanner.nextLine().split("&");
-                    if (input.length > 1) {
-                        id = Integer.valueOf(input[0].trim());
-                        quantity = Integer.valueOf(input[1].trim());
+                    if (input.length == 2) {
+                        id = Integer.parseInt(input[0].trim());
+                        quantity = Integer.parseInt(input[1].trim());
                         service.removeFromOrder(id, quantity);
+                    } else if (input.length == 1 && Integer.parseInt(input[0].trim()) == 0) {
+                        break;
                     } else {
-                        if (Integer.valueOf(input[0].trim())==0) {
-                            break;
-                        }
-                        id = Integer.valueOf(input[0].trim());
-                        service.removeFromOrder(id);
+                        System.out.println("Invalid input. Please enter values in the format: 'id' & 'quantity'.");
                     }
                     break;
                 case 'p':
                     System.out.println(service);
                     System.out.println("Amount to be paid: " + service.sumOrder() + " EUR" + "\n");
                     break;
-                case'm':
+                case 'm':
                     System.out.println(service);
                     System.out.println("Amount to be paid: " + service.sumOrder() + " EUR" + "\n");
-                    System.out.println("Do you want to pay the bill? [y]es/[n]o" );
+                    System.out.println("Do you want to pay the bill? [y]es/[n]o");
                     String choice = scanner.nextLine().toLowerCase();
                     if (choice.equals("y")) {
                         Float answer = service.payTheBill();
                         System.out.println(answer);
-                        System.out.println("\nMoney in the wallet: "+ client.getWallet() + " EUR");
+                        System.out.println("\nMoney in the wallet: " + client.getWallet() + " EUR");
                     } else if (choice.equals("n")) {
                         // TODO rewrite code
                     } else {
@@ -96,13 +97,24 @@ public class ShopController {
                     }
                     break;
                 case 'w':
-                    System.out.println("\nMoney in the wallet: "+ client.getWallet() + " EUR");
+                    System.out.println("\nMoney in the wallet: " + client.getWallet() + " EUR");
                     break;
                 case 'b':
                     break;
                 default:
                     System.out.println("Unrecognized command: " + cdm);
             }
-        }while (cdm != 'b');
+        } while (cdm != 'b');
+    }
+
+    // Methode zur Überprüfung der Größe
+    private boolean isValidSize(String size) {
+        String[] validSizes = {"S", "M", "L", "XL"};
+        for (String validSize : validSizes) {
+            if (size.equalsIgnoreCase(validSize)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
