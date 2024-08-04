@@ -17,9 +17,8 @@ public class ClothService extends BaseService<ClothProduct, ClothRepository> {
 
     String size;
 
-    public ClothService(Client client, ClothRepository repository, String size) throws SQLException {
+    public ClothService(Client client, ClothRepository repository) throws SQLException {
         super(client, repository);
-        this.size = size;
     }
 
     public void minusProductQuantity(int id, int quantity) {
@@ -40,6 +39,29 @@ public class ClothService extends BaseService<ClothProduct, ClothRepository> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String addToOrder(int id, int quantity, String size) {
+        ClothProduct product = repository.findById(id);
+        if (product != null) {
+            if (product.getQuantity() >= quantity) {
+                if (productList.containsKey(id)) {
+                    ClothProduct existingProduct = productList.get(id);
+                    existingProduct.setQuantity(existingProduct.getQuantity() + quantity);
+                } else {
+                    ClothProduct newProduct = createProduct(product);
+                    newProduct.setQuantity(quantity);
+                    newProduct.setId(id);
+                    newProduct.getSize();
+                    productList.put(id, newProduct);
+                }
+                product.setQuantity(product.getQuantity() - quantity);
+                minusProductQuantity(id, quantity);
+                return ("You added: " + quantity + " pcs of " + product.getName() + " to shopping cart");
+            }
+            return ("Not enough pcs, available only " + product.getQuantity() + " pcs");
+        }
+        return ("Incorrect ID entry");
     }
 
 
